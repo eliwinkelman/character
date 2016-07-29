@@ -1,0 +1,21 @@
+<template name="authorize">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+
+                <h1>Setup</h1>
+                <h4>To use [app name here] you need to install the <a href="https://wordpress.org/plugins/rest-api/">WP Rest Api V2 plugin</a> along with the <a href="https://github.com/WP-API/OAuth1">Wp Rest Api Oauth1 Plugin.</a></h4>
+                <h4>Once you've done that, enter your Wordpress blog's (or website's) domain name below.</h4>
+                <form class="domainNameForm form-inline">
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-addon">http://</span>
+                        <input type="text" class="form-control url" id="url" placeholder="Website Url">
+                    </div>
+                    <button class="btn btn-primary" type="submit">Continue</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <div></div>
+</template>

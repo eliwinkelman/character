@@ -1,0 +1,319 @@
+.menuBar {
+    height: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.entry-markdown-content {
+    height: 100%;
+}
+
+.entry-container {
+    height: 100%;
+}
+
+.editor {
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 0;
+}
+
+.editPostButton {
+    position: absolute;
+    top: -5px;
+    right: 25px;
+    color: black;
+}
+
+.editPostButton:hover {
+    position: absolute;
+    top: -5px;
+    color: #2196f3;
+}
+
+.mode-buttons {
+    position: fixed;
+    bottom: 0;
+    padding: 9px;
+    border-top: 1px solid #eeeeee;
+    width: 100%;
+    display: none;
+}
+
+@media only screen and (max-width: 1000px) {
+    .mode-buttons {
+        display: block;
+        z-index: 10000;
+    }
+}
+
+.mode-buttons a{
+    color: black;
+}
+
+.nav-pills>li>a {
+    border-bottom-left-radius:  0!important;
+    border-top-left-radius:  0!important;
+}
+
+.sidebar {
+    padding: 40px 15px 0 0!important;
+    border-right: #eee 1px solid;
+    height: 100vh;
+    overflow: scroll;
+}
+
+@media only screen and (max-width: 768px) {
+    .sidebar {
+        display: none;
+        height: calc(100vh - 60px);
+    }
+}
+.mode-buttons:hover a {
+    text-decoration: none;
+    color: black;
+
+}
+.markdown-mode {
+    border-right: 1px solid #EEE;
+    padding: 6px;
+    padding-left: 0;
+    padding-right: 10px;
+}
+
+body {
+    background-color: #FFFFFF;
+}
+
+.dashboardPost {
+    padding-left: 15px;
+    border-bottom: 1px solid #eee;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 15px;
+    margin: 0!important;
+}
+
+.entry-title {
+    font-size: .75em;
+}
+
+.editPostButtons {
+    margin-top: 10px;
+    float: right!important;
+}
+
+.editButton {
+    display: none!important;
+}
+
+.editButtonActive {
+    display: inline!important;
+
+}
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Loading Animation */
+
+#loader-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+}
+#loader {
+    display: block;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    width: 150px;
+    height: 150px;
+    margin: -75px 0 0 -75px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: #3498db;
+
+    -webkit-animation: spin 2s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
+    animation: spin 2s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
+
+    z-index: 1001;
+}
+
+#loader:before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: #e74c3c;
+
+    -webkit-animation: spin 3s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
+    animation: spin 3s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
+}
+
+#loader:after {
+    content: "";
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    border-top-color: #f9c922;
+
+    -webkit-animation: spin 1.5s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
+    animation: spin 1.5s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
+}
+
+@-webkit-keyframes spin {
+    0%   {
+        -webkit-transform: rotate(0deg);  /* Chrome, Opera 15+, Safari 3.1+ */
+        -ms-transform: rotate(0deg);  /* IE 9 */
+        transform: rotate(0deg);  /* Firefox 16+, IE 10+, Opera */
+    }
+    100% {
+        -webkit-transform: rotate(360deg);  /* Chrome, Opera 15+, Safari 3.1+ */
+        -ms-transform: rotate(360deg);  /* IE 9 */
+        transform: rotate(360deg);  /* Firefox 16+, IE 10+, Opera */
+    }
+}
+@keyframes spin {
+    0%   {
+        -webkit-transform: rotate(0deg);  /* Chrome, Opera 15+, Safari 3.1+ */
+        -ms-transform: rotate(0deg);  /* IE 9 */
+        transform: rotate(0deg);  /* Firefox 16+, IE 10+, Opera */
+    }
+    100% {
+        -webkit-transform: rotate(360deg);  /* Chrome, Opera 15+, Safari 3.1+ */
+        -ms-transform: rotate(360deg);  /* IE 9 */
+        transform: rotate(360deg);  /* Firefox 16+, IE 10+, Opera */
+    }
+}
+
+#loader-wrapper .loader-section {
+    position: fixed;
+    top: 0;
+    width: 51%;
+    height: 100%;
+    background: #ffffff;
+    z-index: 1000;
+    -webkit-transform: translateX(0);  /* Chrome, Opera 15+, Safari 3.1+ */
+    -ms-transform: translateX(0);  /* IE 9 */
+    transform: translateX(0);  /* Firefox 16+, IE 10+, Opera */
+}
+
+#loader-wrapper .loader-section.section-left {
+    left: 0;
+}
+
+#loader-wrapper .loader-section.section-right {
+    right: 0;
+}
+
+.sidebarPosts {
+    height: calc(100vh - 65px);
+    padding-right: 0!important;
+    padding-left: 0!important;
+}
+
+.dashboardPosts {
+    border-right: solid 1px #eee;
+    height: 100%;
+    overflow: scroll;
+}
+
+
+.panelHeader {
+    width: calc(100% + 30px);
+    border-bottom: 1px solid #eee;
+    /*height: 65px;*/
+    padding: 10px;
+    margin-bottom: 0!important;
+    border-radius: 0!important;
+    border-left: 0!important;
+}
+.panelHeader h1 {
+     /*margin-top: 0;*/
+ }
+.dashboardPanel {
+    height: calc(100% - 65px);
+}
+.activePostContent {
+    border-left: 3px #2196f3 solid;
+}
+.navbar {
+    margin-bottom: 0!important;
+    box-shadow: none!important;
+    border-radius: 0!important;
+    border-bottom: 1px solid #eee!important;
+}
+.navbar-brand {
+    margin-bottom: 0!important;
+}
+p {
+    font-size: 20px!important;
+}
+.previewPost {
+    padding: 20px;
+}
+.preview-mode {
+    margin-left: 9px;
+}
+.markdown-mode {
+    font-weight: bold;
+}
+
+.sidebarToggle {
+    margin-bottom: 0!important;
+}
+.contentWrapper {
+    height: 100%;
+}
+.highlight {
+    display: inline-block;
+    background-color: #FFAA3B;
+    line-height: 24px;
+}
+
+.highlightSentence > .highlight {
+    line-height: 10px;
+}
+
+.highlightAdverb {
+    display: inline-block;
+    background-color: rgb(193, 93, 250);
+    border-radius: 5px;
+    padding: 0 5px 0 5px;
+    color: white;
+}
+.highlightAlex {
+    display: inline-block;
+    background-color: red;
+    color: white;
+}
+
+.highlightSentence{
+    background-color: #ffff00;
+}
+.entry-preview-content {
+    line-height: 30px;
+
+}

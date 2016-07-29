@@ -1,0 +1,63 @@
+<template name="dashboard">
+    <body>
+    {{#if isLoading}}
+        {{> loading}}
+    {{else}}
+
+    <div class="container-fluid">
+
+        <div class="row">
+                {{> sidebar}}
+            <div class="dashboardContent col-sm-10 col-md-10 col-lg-10">
+
+                    <div class="row  navbar navbar-default">
+                        <div class="container-fluid">
+                            <div class="navbar-header">
+
+                                {{#if screensize_xs}}
+                                    <button class="sidebarToggle navbar-toggle"><i class="fa fa-bars fa-lg" aria-hidden="true"></i></button>
+                                {{/if}}
+                                <p class="navbar-brand">Content</p>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                <div class="dashboardPanel contentWrapper">
+
+                        <div class="row">
+
+
+                            <div class="col-xs-12 col-md-4 col-sm-6 col-lg-4 sidebarPosts">
+                                <div class="dashboardPosts">
+                                    {{#each posts}}
+                                        {{> dashboardPost}}
+                                    {{/each}}
+                                </div>
+                            </div>
+                            {{#unless screensize_xs}}
+                                <div class="col-sm-6 hidden-xs col-md-8 col-lg-6">
+                                    {{> previewPost title=title content=content}}
+                                </div>
+                            {{/unless}}
+
+                        </div>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+    {{/if}}
+    </body>
+</template>
+
+<template name="content">
+
+</template>

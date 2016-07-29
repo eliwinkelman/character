@@ -1,0 +1,39 @@
+<template name="editor">
+    {{#if isLoading}}
+        {{> loading}}
+    {{else}}
+    <body>
+
+    <main class="editor" id="editor">
+
+
+        <section class="entry-container">
+            <header>
+                <section class="box entry-title">
+                    <div class="row">
+                        <div class="col-xs-4 col-sm-8 col-md-9">
+                            <input id="entry-title" class="entry-title" autofocus="autofocus" placeholder="Your Post Title" value="{{title}}" tabindex="1" type="text">
+
+                        </div>
+
+                        <div class="col-xs-8 col-md-3 col-sm-4">
+
+                            {{> editPostButtons}}
+
+
+                        </div>
+                    </div>
+
+
+                </section>
+            </header>
+            {{> GhostEditor content=content}}
+        </section>
+    </main>
+    <div class="mode-buttons">
+        <a href="" class="markdown-mode">Markdown</a>
+        <a href="" class="preview-mode">Preview</a>
+    </div>
+    </body>
+    {{/if}}
+</template>
