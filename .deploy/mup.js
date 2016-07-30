@@ -1,31 +1,29 @@
 module.exports = {
   servers: {
     one: {
-      host: '52.11.39.246',
+      host: '52.42.204.69',
       username: 'ubuntu',
-      //password: 'toor',
-      pem: "/Users/eliwinkelman/Character.pem"
-    }
+      pem: "/Users/eliwinkelman/Character.pem",
+      // pem: './mykey',
+    },
   },
 
   meteor: {
-    name: 'blogging',
-    path: '../',
-    servers: {
-      one: {}
-    },
-    env: {
-      ROOT_URL: 'http://52.11.39.246'
-      //  MONGO_URL: 'mongodb://localhost/meteor'
-    },
-    dockerImage: 'abernix/meteord:base'
-  }
+      env: {
+        ROOT_URL: 'http://52.42.204.69',
+        PORT: 80,
+        MONGO_URL: 'mongodb://localhost/meteor',
+      },
+    deployCheckWaitTime: 300,
+    enableUploadProgressBar: true,
+    dockerImage: 'abernix/meteord:base',
+  },
 
- //mongo: {
-//   oplog: true,
-//   port: 27017,
-//   servers: {
-//   one: {},
-//   },
-//   },
+  mongo: { //optional
+    oplog: true,
+    port: 27017,
+    servers: {
+      one: {},
+    },
+  },
 };
