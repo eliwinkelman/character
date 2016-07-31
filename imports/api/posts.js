@@ -20,8 +20,8 @@ Meteor.methods({
 			};
 			var oauth = OAuth({
 				consumer: {
-					public: Meteor.settings.consumer_key,
-					secret: Meteor.settings.consumer_secret
+					public: Meteor.user().consumerPublic,
+					secret: Meteor.user().consumerPrivate
 				},
 
 				signature_method: 'HMAC-SHA1'
@@ -57,8 +57,8 @@ Meteor.methods({
 			};
 			var oauth = OAuth({
 				consumer: {
-					public: Meteor.settings.consumer_key,
-					secret: Meteor.settings.consumer_secret
+					public: Meteor.user().consumerPublic,
+					secret: Meteor.user().consumerPrivate
 				},
 
 				signature_method: 'HMAC-SHA1'
@@ -92,8 +92,8 @@ Meteor.methods({
 			};
 			var oauth = OAuth({
 				consumer: {
-					public: Meteor.settings.consumer_key,
-					secret: Meteor.settings.consumer_secret
+					public: Meteor.user().consumerPublic,
+					secret: Meteor.user().consumerPrivate
 				},
 
 				signature_method: 'HMAC-SHA1'
@@ -121,8 +121,8 @@ Meteor.methods({
 			};
 			var oauth = OAuth({
 				consumer: {
-					public: Meteor.settings.consumer_key,
-					secret: Meteor.settings.consumer_secret
+					public: Meteor.user().consumerPublic,
+					secret: Meteor.user().consumerPrivate
 				},
 
 				signature_method: 'HMAC-SHA1'
@@ -141,9 +141,8 @@ Meteor.methods({
 	'getPosts'() {
 
 	if (Meteor.isServer) {
-		var requestLink = 'http://localhost:8888/wp-json/wp/v2/posts/';
+		var requestLink = Meteor.user().website + '/wp-json/wp/v2/posts/';
 		var posts = HTTP.get(requestLink, {
-			headers: {'Authorization': 'Basic ZXdpbmtlbG1hbjprYXQxMjM='},
 			params: {
 				"status": "any"
 			}
@@ -166,9 +165,8 @@ Meteor.methods({
 	},
 	'getPost'(id) {
 		if(Meteor.isServer) {
-			var requestLink = 'http://localhost:8888/wp-json/wp/v2/posts/';
-			var post = HTTP.post(requestLink + id, {
-				headers: {'Authorization': 'Basic ZXdpbmtlbG1hbjprYXQxMjM='}
+			var requestLink = Meteor.user().website + '/wp-json/wp/v2/posts/';
+			var post = HTTP.get(requestLink + id, {
 
 			});
 

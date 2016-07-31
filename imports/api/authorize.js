@@ -31,7 +31,7 @@ Meteor.methods({
 					url: requestUrl,
 					method: 'GET',
 					data: {
-						oauth_callback: "http://localhost:3000/authorize"
+						oauth_callback: Meteor.settings.callback_url
 					}
 				};
 				var oauth = OAuth({
