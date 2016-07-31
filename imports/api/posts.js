@@ -165,9 +165,31 @@ Meteor.methods({
 	},
 	'getPost'(id) {
 		if(Meteor.isServer) {
-			var requestLink = Meteor.user().website + '/wp-json/wp/v2/posts/';
-			var post = HTTP.get(requestLink + id, {
+			var requestLink = Meteor.user().website + '/wp-json/wp/v2/posts/' + id;
 
+			var token = Meteor.user().token;
+			var tokenSecret = Meteor.user().tokenSecret;
+			var request_data = {
+				url: requestLink,
+				method: 'POST',
+				data: {
+				}
+			};
+			var oauth = OAuth({
+				consumer: {
+					public: Meteor.user().consumerPublic,
+					secret: Meteor.user().consumerPrivate
+				},
+
+				signature_method: 'HMAC-SHA1'
+			});
+			var tokens = {
+				public: token,
+				secret: tokenSecret
+			};
+
+			var post = HTTP.post(requestLink, {
+				params: oauth.authorize(request_data, tokens)
 			});
 
 			return (post);
