@@ -7,9 +7,7 @@ import "./../loading";
 
 Template.editor.onCreated(
 	function() {
-		$.getScript('https://cdnjs.cloudflare.com/ajax/libs/mark.js/7.0.2/jquery.mark.min.js');
-		//Load all content before showing
-		mark = require('mark.js');
+
 		this.isLoading = new ReactiveVar(true);
 		var postId = FlowRouter.getParam('postId');
 		var self = this;

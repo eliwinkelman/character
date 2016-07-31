@@ -17,7 +17,7 @@ if (Meteor.isServer) {
 
 
 Meteor.methods({
-	'getTempTokens'(siteUrl) {
+	'getTempTokens'(siteUrl, consumerPublic, consumerPrivate) {
 		if (Meteor.isServer) {
 
 			var requestLink = 'http://' + siteUrl + '/wp-json/';
@@ -36,8 +36,8 @@ Meteor.methods({
 				};
 				var oauth = OAuth({
 					consumer: {
-						public: Meteor.settings.consumer_key,
-						secret: Meteor.settings.consumer_secret
+						public: consumerPublic,
+						secret: consumerPrivate
 					},
 
 					signature_method: 'HMAC-SHA1'
@@ -53,7 +53,9 @@ Meteor.methods({
 				Meteor.users.update(Meteor.userId(), {$set: {
 					token: token,
 					tokenSecret: tokenSecret,
-					website: 'http://' + siteUrl
+					website: 'http://' + siteUrl,
+					consumerPublic: consumerPublic,
+					consumerPrivate: consumerPrivate
 				}});
 				console.log(token, tokenSecret);
 				var authorizeUrl = authentication.data.authentication.oauth1.authorize;
@@ -77,9 +79,11 @@ Meteor.methods({
 
 			if (accessUrl != '') {
 				var tempToken = Meteor.user().token;
-				console.log(tempToken);
-				var tempTokenSecret = Meteor.user().tokenSecret;
-				console.log(tempTokenSecret);
+
+				var tempTokenSecret = Meteor.user().tokenSecret,
+					consumerPrivate = Meteor.user().consumerPrivate,
+					consumerPublic = Meteor.user().consumerPublic;
+
 				var request_data = {
 					url: accessUrl,
 					method: 'GET',
@@ -89,8 +93,8 @@ Meteor.methods({
 				};
 				var oauth = OAuth({
 					consumer: {
-						public: Meteor.settings.consumer_key,
-						secret: Meteor.settings.consumer_secret
+						public: consumerPublic,
+						secret: consumerPrivate
 					},
 
 					signature_method: 'HMAC-SHA1'

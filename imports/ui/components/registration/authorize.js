@@ -18,8 +18,10 @@ Template.authorize.events({
 		event.preventDefault();
 		console.log("submitted");
 		const target = event.target;
-		var url = target.url.value;
-		Meteor.call('getTempTokens', url, function(error, response) {
+		var url = target.url.value,
+			consumerPublic = target.consumerPublic.value,
+			consumerPrivate = target.consumerPrivate.value;
+		Meteor.call('getTempTokens', url, consumerPublic, consumerPrivate, function(error, response) {
 			if (!error) {
 				window.location.href = response;
 			}
