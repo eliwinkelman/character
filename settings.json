@@ -1,5 +1,5 @@
 {
   "consumer_key": "1DkNrGFgOMmy",
   "consumer_secret": "uOxEmZ5ynYZGRX0yqse1mSNNj9Q1eUIXLhryJcHmalqJHpnG",
-  "callback_url": "https://character-blogging.herokuapp.com/authorize"
+  "callback_url": "localhost:3000/authorize"
 }

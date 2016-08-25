@@ -272,7 +272,13 @@ p {
     font-size: 20px!important;
 }
 .previewPost {
+
+    height: calc(100vh - 64px);
+}
+.previewPostContent {
     padding: 20px;
+    overflow: scroll;
+    height: 100%;
 }
 .preview-mode {
     margin-left: 9px;

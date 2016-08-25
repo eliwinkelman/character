@@ -37,6 +37,7 @@ cosmos:browserify
 
 twbs:bootstrap
 accounts-password@1.2.12
-useraccounts:bootstrap
 useraccounts:flow-routing
 oauth1@1.1.10
+useraccounts:bootstrap
+accounts-ui

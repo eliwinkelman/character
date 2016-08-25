@@ -45,7 +45,7 @@ Template.sidebar.helpers({
 	'contentActive'() {
 		var path = FlowRouter.current().path;
 
-		var re = new RegExp('/?[0-9][^a-z]*');
+		var re = new RegExp('/dash/?[0-9]*');
 		if (re.test(path) || path=='/') {
 			return "active";
 		}

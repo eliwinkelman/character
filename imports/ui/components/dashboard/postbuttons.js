@@ -95,7 +95,7 @@ Template.editPostButtons.events({
 				Meteor.call('deletePost', postId, function(error, response) {
 					if(!error) {
 						setTimeout(function() {
-							FlowRouter.go('/');
+							FlowRouter.go('/dash');
 						}, 1000);
 
 					}
