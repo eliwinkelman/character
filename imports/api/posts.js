@@ -2,7 +2,7 @@ import { Mongo } from "meteor/mongo";
 import { Meteor } from "meteor/meteor";
 var OAuth  = require('oauth-1.0a');
 export const Posts = new Mongo.Collection('posts');
-
+//TODO: add blog registry - multiple users per blog.
 Meteor.methods({
 	'newPost'(title, content) {
 		if (Meteor.isServer) {

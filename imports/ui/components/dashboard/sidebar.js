@@ -1,7 +1,7 @@
 import "./sidebar.html"
 import { Template } from "meteor/templating"
 import "./post";
-
+//TODO: User Settings
 Template.sidebar.onCreated(
 	function() {
 		var sidebar = document.querySelector("#sidebar");

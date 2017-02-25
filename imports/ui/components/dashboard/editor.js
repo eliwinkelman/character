@@ -4,6 +4,10 @@ import { Meteor } from "meteor/meteor";
 import "./postbuttons.js";
 import "./../loading";
 
+//TODO: Autosave
+//TODO: SEO Suggestions (yoastjs)
+//TODO: Switch away from ghostdown to cleaner(code) editor.
+//TODO: Collaborative (multi user) editing.
 
 Template.editor.onCreated(
 	function() {

@@ -4,7 +4,6 @@ import { Meteor } from "meteor/meteor";
 Template.editPostButtons.onCreated(
 	function () {
 		this.isSaving = new ReactiveVar(false);
-
 	}
 );
 
@@ -55,8 +54,7 @@ Template.editPostButtons.events({
 
 		if (Template.instance().isSaving.get() == false) {
 			Template.instance().isSaving.set(true);
-
-
+			
 			var postId = FlowRouter.getParam('postId');
 			var content = Session.get('editor-html');
 			var title = document.getElementById('entry-title').value;
@@ -120,7 +118,6 @@ Template.editPostButtons.events({
 
 				});
 			}
-
 			else {
 				Meteor.call('publishPost', postId, title, content, function(error, result) {
 					if (!error) {

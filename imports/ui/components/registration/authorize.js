@@ -1,6 +1,7 @@
 import "./authorize.html";
 import { Template } from "meteor/templating";
 import { Meteor } from "meteor/meteor";
+
 Meteor.subscribe('userData');
 Template.authorize.onRendered(() => {
 	var oauthVerifier = FlowRouter.getQueryParam('oauth_verifier');
@@ -16,14 +17,14 @@ Template.authorize.onRendered(() => {
 Template.authorize.events({
 	'submit .domainNameForm'(event) {
 		event.preventDefault();
-		console.log("submitted");
 		const target = event.target;
-		var url = target.url.value,
-			consumerPublic = target.consumerPublic.value,
-			consumerPrivate = target.consumerPrivate.value;
-		Meteor.call('getTempTokens', url, consumerPublic, consumerPrivate, function(error, response) {
+		var url = target.url.value;
+		Meteor.call('getTempTokens', url, function(error, response) {
 			if (!error) {
 				window.location.href = response;
+			}
+			else {
+				alert("There was a server error.")
 			}
 		});
 	}

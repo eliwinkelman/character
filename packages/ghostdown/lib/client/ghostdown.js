@@ -3,7 +3,7 @@
  */
 
 
-
+//TODO: Fix bug that causes words in highlighted sentances to not be highlighted.
 
 Meteor.startup(function() {
   Session.setDefault('editor-markdown', null);
@@ -128,7 +128,7 @@ Template.GhostEditor.rendered = function() {
 		      }
 		      //this function highlights entire sentences
 		      function highlightSentence(html, color) {
-			      return (html.replace(/(<[a-z]+[^<]*>)*(\S+)([\s+]|$)(<[a-z]+[^<]*>)*/g,  "$1<span style='background-color:" + color + ";' class='highlightSentence'>$2$3</span>$4"));
+			      return (html.replace(/(<[a-z]+[^<]*>)*(\S+)([\s+]|$)(<[a-z]+[^<]*>)*/g, "$1<span style='background-color:" + color + ";' class='highlightSentence'>$2$3</span>$4"));
 		      }
 
 		      for (i = 0; i < sentences.length; i++ ) {
