@@ -3,7 +3,7 @@ import { Template } from "meteor/templating";
 import { Meteor } from "meteor/meteor";
 import "./postbuttons.js";
 import "./../loading";
-
+import {MyEditor} from './react-editor/Editor';
 //TODO: Autosave
 //TODO: SEO Suggestions (yoastjs)
 //TODO: Switch away from ghostdown to cleaner(code) editor.
@@ -43,6 +43,9 @@ Template.editor.onCreated(
 );
 
 Template.editor.helpers({
+	'MyEditor'() {
+		return MyEditor;
+	},
 	'isLoading'() {
 		//checks if the template is still loading data
 		return Template.instance().isLoading.get();
@@ -56,7 +59,6 @@ Template.editor.helpers({
 			var title = Session.get('editor-title');
 			return (title);
 		}
-
 	},
 	'content'() {
 		//return the posts content
@@ -97,32 +99,9 @@ Template.editor.helpers({
 
 });
 Template.editor.events({
-	'click .markdown-mode'(event, template) {
-		//switch the mode to markdown on smaller screens
-		var entryMarkdown = document.querySelector(".entry-markdown");
-		var entryPreview = document.querySelector(".entry-preview");
-		var markdownModeButton = document.querySelector(".markdown-mode");
-		var previewModeButton = document.querySelector(".preview-mode");
-		entryPreview.classList.remove("active");
-		entryMarkdown.classList.add("active");
-		previewModeButton.style.fontWeight = '';
-		markdownModeButton.style.fontWeight = 'bold';
-
-	},
-	'click .preview-mode'(event, template) {
-		//switch mode to preview on smaller screens
-		var entryPreview = document.querySelector(".entry-preview");
-		var entryMarkdown = document.querySelector(".entry-markdown");
-		var markdownModeButton = document.querySelector(".markdown-mode");
-		var previewModeButton = document.querySelector(".preview-mode");
-		entryPreview.classList.add("active");
-		entryMarkdown.classList.remove("active");
-		previewModeButton.style.fontWeight = 'bold';
-		markdownModeButton.style.fontWeight = '';
-
-	},
+	
 	'blur .entry-title'() {
-		console.log("blurred lines");
+
 		var title = document.getElementById('entry-title');
 		if (title.value == '') {
 			title.value = '(Untitled)';

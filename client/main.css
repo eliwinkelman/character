@@ -11,18 +11,14 @@
     height: 100%;
 }
 
-.editor {
-    top: 0;
-    left: 0;
-    right: 0;
-    padding: 0;
-}
-
 .editPostButton {
     position: absolute;
     top: -5px;
     right: 25px;
     color: black;
+    background: none;
+    border: none;
+    outline: none
 }
 
 .editPostButton:hover {
@@ -31,14 +27,7 @@
     color: #2196f3;
 }
 
-.mode-buttons {
-    position: fixed;
-    bottom: 0;
-    padding: 9px;
-    border-top: 1px solid #eeeeee;
-    width: 100%;
-    display: none;
-}
+
 
 @media only screen and (max-width: 1000px) {
     .mode-buttons {
@@ -47,9 +36,7 @@
     }
 }
 
-.mode-buttons a{
-    color: black;
-}
+
 
 .nav-pills>li>a {
     border-bottom-left-radius:  0!important;
@@ -69,17 +56,9 @@
         height: calc(100vh - 60px);
     }
 }
-.mode-buttons:hover a {
-    text-decoration: none;
-    color: black;
 
-}
-.markdown-mode {
-    border-right: 1px solid #EEE;
-    padding: 6px;
-    padding-left: 0;
-    padding-right: 10px;
-}
+
+
 
 body {
     background-color: #FFFFFF;
@@ -95,22 +74,23 @@ body {
 }
 
 .entry-title {
-    font-size: .75em;
+    font-size: 30px!important;
+    outline: none;
+    padding-left: 10px;
+    padding-top: 10px;
+
+}
+.entry-title :focus {
+    border: none;
+
 }
 
 .editPostButtons {
     margin-top: 10px;
+    margin-right: 10px;
     float: right!important;
 }
 
-.editButton {
-    display: none!important;
-}
-
-.editButtonActive {
-    display: inline!important;
-
-}
 .loader {
     border: 16px solid #f3f3f3; /* Light grey */
     border-top: 16px solid #3498db; /* Blue */
@@ -326,3 +306,55 @@ p {
 .signInButton {
     margin-top: 20px;
 }
+
+/* CSS declarations go here */
+.RichEditor-root {
+    background: #fff;
+    border: 1px solid #ddd;
+    font-family: 'Georgia', serif;
+    font-size: 14px;
+    padding: 15px;
+    padding-bottom: 0;
+    margin: 10px;
+}
+
+.RichEditor-editor {
+    border-top: 1px solid #ddd;
+    cursor: text;
+    font-size: 16px;
+    margin-top: 10px;
+    overflow-y: scroll;
+    height: calc( 100vh - 155px );
+}
+
+.RichEditor-editor .public-DraftEditorPlaceholder-root,
+.RichEditor-editor .public-DraftEditor-content {
+    margin: 0 -15px -15px;
+    padding: 15px;
+}
+
+.RichEditor-editor .public-DraftEditor-content {
+    min-height: 100px;
+
+}
+
+.RichEditor-hidePlaceholder .public-DraftEditorPlaceholder-root {
+    display: none;
+}
+
+.RichEditor-editor .RichEditor-blockquote {
+    border-left: 5px solid #eee;
+    color: #666;
+    font-family: 'Hoefler Text', 'Georgia', serif;
+    font-style: italic;
+    margin: 16px 0;
+    padding: 10px 20px;
+}
+
+.RichEditor-editor .public-DraftStyleDefault-pre {
+    background-color: rgba(0, 0, 0, 0.05);
+    font-family: 'Inconsolata', 'Menlo', 'Consolas', monospace;
+    font-size: 16px;
+    padding: 20px;
+}
+

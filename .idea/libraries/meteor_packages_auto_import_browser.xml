@@ -103,6 +103,8 @@
         <item url="file://$USER_HOME$/.meteor/packages/ecmascript-runtime/0.3.15/web.browser/runtime.js" />
         <item url="file://$USER_HOME$/.meteor/packages/logging/1.1.16/web.browser/logging_test.js" />
         <item url="file://$USER_HOME$/.meteor/packages/ecmascript-runtime/0.3.15/web.browser/runtime-tests.js" />
+        <item url="file://$USER_HOME$/.meteor/packages/react-template-helper/0.2.9/web.browser/react-template-helper.js" />
+        <item url="file://$USER_HOME$/.meteor/packages/tmeasday_check-npm-versions/0.2.0/web.browser/check-npm-versions.js" />
         <item url="file://$USER_HOME$/.meteor/packages/launch-screen/1.1.0/web.browser/mobile-launch-screen.js" />
         <item url="file://$USER_HOME$/.meteor/packages/launch-screen/1.1.0/web.browser/default-behavior.js" />
         <item url="file://$USER_HOME$/.meteor/packages/modules-runtime/0.7.8/web.browser/.npm/package/node_modules/install/install.js" />
@@ -402,6 +404,8 @@
       <root url="file://$USER_HOME$/.meteor/packages/ecmascript-runtime/0.3.15/web.browser/runtime.js" />
       <root url="file://$USER_HOME$/.meteor/packages/logging/1.1.16/web.browser/logging_test.js" />
       <root url="file://$USER_HOME$/.meteor/packages/ecmascript-runtime/0.3.15/web.browser/runtime-tests.js" />
+      <root url="file://$USER_HOME$/.meteor/packages/react-template-helper/0.2.9/web.browser/react-template-helper.js" />
+      <root url="file://$USER_HOME$/.meteor/packages/tmeasday_check-npm-versions/0.2.0/web.browser/check-npm-versions.js" />
       <root url="file://$USER_HOME$/.meteor/packages/launch-screen/1.1.0/web.browser/mobile-launch-screen.js" />
       <root url="file://$USER_HOME$/.meteor/packages/launch-screen/1.1.0/web.browser/default-behavior.js" />
       <root url="file://$USER_HOME$/.meteor/packages/modules-runtime/0.7.8/web.browser/.npm/package/node_modules/install/install.js" />

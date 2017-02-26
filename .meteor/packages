@@ -32,7 +32,6 @@ simple:reactive-method
 eli:ghostdown
 donflopez:tomarkdown
 robsw:mediaquery-bootstrap-3
-cosmos:browserify
 
 
 twbs:bootstrap
@@ -42,3 +41,5 @@ oauth1@1.1.11
 useraccounts:bootstrap
 accounts-ui@1.1.9
 shell-server
+react-template-helper
+cosmos:browserify
