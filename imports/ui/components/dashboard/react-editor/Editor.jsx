@@ -3,7 +3,7 @@ import Editor from 'draft-js-plugins-editor';
 import retext from 'retext';
 import simplify from 'retext-simplify'
 import passive from 'retext-passive'
-
+import writeGood from 'write-good';
 import {CompositeDecorator, EditorState, ContentState, RichUtils} from 'draft-js';
 import {Header} from './Header';
 import 'draft-js/dist/Draft.css';
@@ -14,7 +14,7 @@ import {getDefaultKeyBinding, KeyBindingUtil} from 'draft-js';
 import {convertFromRaw, convertToRaw, convertFromHTML} from 'draft-js';
 import {Meteor} from 'meteor/meteor';
 //Todo: look at swarm for collaboration
-var adverbWhere = require('adverb-where');
+
 export class MyEditor extends React.Component {
 
 	constructor(props) {
@@ -30,7 +30,7 @@ export class MyEditor extends React.Component {
 		
 		this.state = {
 			editorState: editorState,
-			loadWords: true,
+			loadWords: false,
 			//words
 			simplify: [],
 			overuse: [],
@@ -135,55 +135,88 @@ export class MyEditor extends React.Component {
 	adverbStrategy(contentBlock, callback, contentState) {
 
 		if(this.state.loadWords) {
-			var loadedWords = adverbWhere(contentBlock.text.toLowerCase());
-
-			this.setState({adverbs: loadedWords});
+			var loadedWords = writeGood(contentBlock.text.toLowerCase(), {
+				weasel: false,
+				passive: false,
+				illusion: false,
+				so: false,
+				thereIs: false,
+				cliches: false,
+				tooWordy: false
+			});
+			var adverbs = this.state.adverbs;
+			for (var i = 0; i < loadedWords.length; i++) {
+				var offset = loadedWords[i].offset,
+					index = loadedWords[i].index;
+				var adverb = contentBlock.text.toLowerCase().substr(index, offset)
+				if(adverbs.indexOf(adverb) === -1){
+					adverbs.push(adverb);
+				}
+			}
+			this.setState({adverbs: adverbs});
 			this.setState({loadWords: false})
 		}
+
 		var words = this.state.adverbs;
+		console.log(words);
 		if(words != undefined){
-			for (var i = 0; i < words.length; i++) {
-				callback(words[i].index, words[i].index + words[i].offset);
+			for (i = 0; i < words.length; i++) {
+				var word = words[i];
+				findWithRegex(WORD_REGEX(word), contentBlock, callback);
 			}
 		}
 	}
 
 	passiveStrategy(contentBlock, callback, contentState) {
-
+		var passiveWords = this.state.passive;
 		if(this.state.loadWords) {
 			var loadedWords = retext().use(passive).process(contentBlock.text.toLowerCase());
-			this.setState({passive: loadedWords.messages});
+
+			for (var i = 0; i < loadedWords.messages.length; i++) {
+				if(passiveWords.indexOf(loadedWords.messages[i].ruleId) === -1){
+					passiveWords.push(loadedWords.messages[i].ruleId)
+				}
+			}
+
+			this.setState({passive: passiveWords});
 			this.setState({loadWords: false})
 		}
 		var words = this.state.passive;
 
+
 		if(words != undefined){
 			for (i = 0; i < words.length; i++) {
-				var word = words[i].ruleId;
+				var word = words[i];
 				findWithRegex(WORD_REGEX(word), contentBlock, callback);
 			}
 		}
 	}
 
 	simplifyStrategy(contentBlock, callback, contentState) {
-
+		var simplifyWords = this.state.simplify;
 		if(this.state.loadWords) {
 			var loadedWords = retext().use(simplify).process(contentBlock.text.toLowerCase());
-			this.setState({simplify: loadedWords.messages});
+
+			for (var i = 0; i < loadedWords.messages.length; i++) {
+				if (simplifyWords.indexOf(loadedWords.messages[i].ruleId) === -1) {
+					simplifyWords.push(loadedWords.messages[i].ruleId)
+				}
+			}
+			this.setState({simplify: simplifyWords});
 			this.setState({loadWords: false})
 		}
-
 		var words = this.state.simplify;
 
 		if(words != undefined){
 			for (i = 0; i < words.length; i++) {
-				var word = words[i].ruleId;
+				var word = words[i];
 				findWithRegex(WORD_REGEX(word), contentBlock, callback);
 			}
 		}
 	}
 
 	render() {
+		const plugins = [richButtonsPlugin];
 		let className = 'RichEditor-editor';
 		return (
 			<div>
@@ -211,7 +244,7 @@ export class MyEditor extends React.Component {
 						component: AdverbHighlightSpan
 					}]}
 					ref="editor"
-				    plugins={[richButtonsPlugin]}
+				    plugins={plugins}
 				/>
 					</div>
 			</div>
@@ -269,7 +302,7 @@ const AdverbHighlightSpan = (props) => {
 const styles = {
 
 	highlightSimplify: {
-		backgroundColor: 'rgb(255, 153, 204)'
+		backgroundColor: 'rgba(98, 177, 254, 1.0)'
 	},
 	highlightAdverb: {
 		backgroundColor: 'rgb(102, 255, 153)'
