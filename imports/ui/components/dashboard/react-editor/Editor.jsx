@@ -2,6 +2,8 @@ import React from 'react';
 import Editor from 'draft-js-plugins-editor';
 import retext from 'retext';
 import simplify from 'retext-simplify'
+import passive from 'retext-passive'
+
 import {CompositeDecorator, EditorState, ContentState, RichUtils} from 'draft-js';
 import {Header} from './Header';
 import 'draft-js/dist/Draft.css';
@@ -12,29 +14,42 @@ import {getDefaultKeyBinding, KeyBindingUtil} from 'draft-js';
 import {convertFromRaw, convertToRaw, convertFromHTML} from 'draft-js';
 import {Meteor} from 'meteor/meteor';
 //Todo: look at swarm for collaboration
-
+var adverbWhere = require('adverb-where');
 export class MyEditor extends React.Component {
 
 	constructor(props) {
 		super(props);//must be called
-		blocksFromHTML = convertFromHTML(this.props.content);
+		editorState = EditorState.createEmpty();
+		if (this.props.content != null) {
+			let blocksFromHTML = convertFromHTML(this.props.content);
+			editorState = EditorState.createWithContent(ContentState.createFromBlockArray(
+				blocksFromHTML.contentBlocks,
+				blocksFromHTML.entityMap
+			));
+		}
+		
+		this.state = {
+			editorState: editorState,
+			loadWords: true,
+			//words
+			simplify: [],
+			overuse: [],
+			passive: [],
+			adverbs: [],
+
+			isSaving: false
+		};
+
+
+
 
 		this.onChange = (editorState) => this.setState({editorState});
 		this.handleKeyCommand = this.handleKeyCommand.bind(this);
 		this.myKeyBindingFn = this.myKeyBindingFn.bind(this);
-		this.handleStrategy = this.handleStrategy.bind(this);
+		this.simplifyStrategy = this.simplifyStrategy.bind(this);
+		this.passiveStrategy = this.passiveStrategy.bind(this);
 		this.onSubmitButtonClick = this.onSubmitButtonClick.bind(this);
-		this.state = {
-			editorState: EditorState.createWithContent(ContentState.createFromBlockArray(
-				blocksFromHTML.contentBlocks,
-				blocksFromHTML.entityMap
-			)),
-			loadWords: true,
-			words: {
-				simplify: []
-			},
-			isSaving: false
-		};
+		this.adverbStrategy = this.adverbStrategy.bind(this);
 	}
 
 	myKeyBindingFn(e: SyntheticKeyboardEvent): string {
@@ -52,10 +67,6 @@ export class MyEditor extends React.Component {
 			return 'handled';
 		}
 		return 'not-handled';
-	}
-
-	_onBoldClick() {
-		this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, 'BOLD'));
 	}
 
 	onSubmitButtonClick(button) {
@@ -108,7 +119,6 @@ export class MyEditor extends React.Component {
 		else if (button == 'Delete'){
 			if(!this.state.isSaving){
 				this.setState({isSaving: true});
-				var postId = FlowRouter.getParam('postId');
 				Meteor.call('deletePost', postId, function(error, response) {
 					if(!error) {
 						setTimeout(function() {
@@ -122,18 +132,50 @@ export class MyEditor extends React.Component {
 			alert('unknown button')
 		}
 	}
-
-	handleStrategy(contentBlock, callback, contentState) {
+	adverbStrategy(contentBlock, callback, contentState) {
 
 		if(this.state.loadWords) {
-			var loadedWords = retext().use(simplify).process(contentBlock.text);
-			this.setState({words: loadedWords.messages});
+			var loadedWords = adverbWhere(contentBlock.text.toLowerCase());
+
+			this.setState({adverbs: loadedWords});
+			this.setState({loadWords: false})
+		}
+		var words = this.state.adverbs;
+		if(words != undefined){
+			for (var i = 0; i < words.length; i++) {
+				callback(words[i].index, words[i].index + words[i].offset);
+			}
+		}
+	}
+
+	passiveStrategy(contentBlock, callback, contentState) {
+
+		if(this.state.loadWords) {
+			var loadedWords = retext().use(passive).process(contentBlock.text.toLowerCase());
+			this.setState({passive: loadedWords.messages});
+			this.setState({loadWords: false})
+		}
+		var words = this.state.passive;
+
+		if(words != undefined){
+			for (i = 0; i < words.length; i++) {
+				var word = words[i].ruleId;
+				findWithRegex(WORD_REGEX(word), contentBlock, callback);
+			}
+		}
+	}
+
+	simplifyStrategy(contentBlock, callback, contentState) {
+
+		if(this.state.loadWords) {
+			var loadedWords = retext().use(simplify).process(contentBlock.text.toLowerCase());
+			this.setState({simplify: loadedWords.messages});
 			this.setState({loadWords: false})
 		}
 
-		var words = this.state.words;
-		
-		if(words.length != undefined){
+		var words = this.state.simplify;
+
+		if(words != undefined){
 			for (i = 0; i < words.length; i++) {
 				var word = words[i].ruleId;
 				findWithRegex(WORD_REGEX(word), contentBlock, callback);
@@ -157,8 +199,16 @@ export class MyEditor extends React.Component {
 					keyBindingFn={this.myKeyBindingFn}
 					decorators={[
 					{
-						strategy: this.handleStrategy,
-						component: HighlightSpan
+						strategy: this.simplifyStrategy,
+						component: SimplifyHighlightSpan
+					},
+					{
+						strategy: this.passiveStrategy,
+						component: PassiveHighlightSpan
+					},
+					{
+						strategy: this.adverbStrategy,
+						component: AdverbHighlightSpan
 					}]}
 					ref="editor"
 				    plugins={[richButtonsPlugin]}
@@ -174,7 +224,7 @@ export class MyEditor extends React.Component {
 
 function WORD_REGEX(word){
 	return new RegExp('(\\b' +
-		word + '\\b)', 'g');
+		word + '\\b)', 'gi');
 }
 
 function findWithRegex(regex, contentBlock, callback) {
@@ -186,21 +236,46 @@ function findWithRegex(regex, contentBlock, callback) {
 	}
 }
 
-const HighlightSpan = (props) => {
+const SimplifyHighlightSpan = (props) => {
 	return (
 		<span
-			style={styles.highlight}
+			style={styles.highlightSimplify}
 			data-offset-key={props.offsetKey}
 		>
             {props.children}
           </span>
 	);
 };
-
+const PassiveHighlightSpan = (props) => {
+	return (
+		<span
+			style={styles.highlightPassive}
+			data-offset-key={props.offsetKey}
+		>
+            {props.children}
+          </span>
+	);
+};
+const AdverbHighlightSpan = (props) => {
+	return (
+		<span
+			style={styles.highlightAdverb}
+			data-offset-key={props.offsetKey}
+		>
+            {props.children}
+          </span>
+	);
+};
 const styles = {
 
-	highlight: {
-		backgroundColor: 'rgba(98, 177, 254, 1.0)'
+	highlightSimplify: {
+		backgroundColor: 'rgb(255, 153, 204)'
+	},
+	highlightAdverb: {
+		backgroundColor: 'rgb(102, 255, 153)'
+	},
+	highlightPassive: {
+		backgroundColor: '#FFAA3B'
 	}
 
 };

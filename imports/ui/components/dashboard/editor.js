@@ -6,12 +6,10 @@ import "./../loading";
 import {MyEditor} from './react-editor/Editor';
 //TODO: Autosave
 //TODO: SEO Suggestions (yoastjs)
-//TODO: Switch away from ghostdown to cleaner(code) editor.
 //TODO: Collaborative (multi user) editing.
 
 Template.editor.onCreated(
 	function() {
-
 		this.isLoading = new ReactiveVar(true);
 		var postId = FlowRouter.getParam('postId');
 		var self = this;
@@ -25,7 +23,11 @@ Template.editor.onCreated(
 						Session.set('editor-title', result.data.title.rendered);
 						Session.set('editor-content', result.data.content.raw);
 					}, 1000);
-
+				if (error) {
+					alert('There was an error getting the post. Error is in console.');
+					console.log(error);
+					FlowRouter.go('/dash');
+				}
 				}
 
 			});
@@ -67,34 +69,6 @@ Template.editor.helpers({
 			return (content);
 		}
 
-	},
-	'suggestions'() {
-		var writeGood = require('write-good');
-		function highlightSuggestions(suggestions, originalHtml) {
-			var highlightedHtml = originalHtml;
-			function highlight(index, text, offset, reason) {
-				var finalText = "<span class='highlight'><abbr title='" + reason + "' >" + text.substring(0, index) + "</abbr></span>";
-				return finalText
-			}
-
-			for (var i = 0; i < suggestions.length; i++) {
-				var offset = suggestions[i].offset,
-					index = suggestions[i].index,
-					reason = suggestions[i].reason,
-					text = originalHtml.substr(index, offset),
-					highlightedText = highlight(index, text, offset, reason);
-				highlightedHtml = highlightedHtml.replace(text, highlightedText);
-
-			}
-			return highlightedHtml;
-
-
-		}
-		var text = Session.get('editor-html');
-		var suggestions = writeGood(text);
-		var highLightedSuggestions = highlightSuggestions(suggestions, text);
-		console.log(highLightedSuggestions);
-		return(highLightedSuggestions);
 	}
 
 });

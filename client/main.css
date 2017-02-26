@@ -27,8 +27,6 @@
     color: #2196f3;
 }
 
-
-
 @media only screen and (max-width: 1000px) {
     .mode-buttons {
         display: block;
@@ -57,11 +55,9 @@
     }
 }
 
-
-
-
 body {
     background-color: #FFFFFF;
+    overflow-x: hidden;
 }
 
 .dashboardPost {
@@ -324,6 +320,7 @@ p {
     font-size: 16px;
     margin-top: 10px;
     overflow-y: scroll;
+    overflow-x: hidden;
     height: calc( 100vh - 155px );
 }
 
