@@ -13,7 +13,7 @@ import {EditorButtons} from './Buttons.jsx';
 import {getDefaultKeyBinding, KeyBindingUtil} from 'draft-js';
 import {convertFromRaw, convertToRaw, convertFromHTML} from 'draft-js';
 import {Meteor} from 'meteor/meteor';
-//Todo: look at swarm for collaboration
+
 
 export class MyEditor extends React.Component {
 
@@ -39,8 +39,6 @@ export class MyEditor extends React.Component {
 
 			isSaving: false
 		};
-
-
 
 
 		this.onChange = (editorState) => this.setState({editorState});

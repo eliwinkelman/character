@@ -3,7 +3,7 @@ import { Template } from "meteor/templating";
 import { Meteor } from "meteor/meteor";
 import "./postbuttons.js";
 import "./../loading";
-import {MyEditor} from './react-editor/Editor';
+import {quillEditor} from './quill-editor/Quill.jsx';
 //TODO: Autosave
 //TODO: SEO Suggestions (yoastjs)
 //TODO: Collaborative (multi user) editing.
@@ -13,6 +13,7 @@ Template.editor.onCreated(
 		this.isLoading = new ReactiveVar(true);
 		var postId = FlowRouter.getParam('postId');
 		var self = this;
+
 		if (postId) {
 			//loads all the post data
 			Meteor.call('getPost', postId, function(error, result){
@@ -20,8 +21,7 @@ Template.editor.onCreated(
 					$("#loader-wrapper").fadeOut(1000);
 					setTimeout(function() {
 						self.isLoading.set(false);
-						Session.set('editor-title', result.data.title.rendered);
-						Session.set('editor-content', result.data.content.raw);
+
 					}, 1000);
 				if (error) {
 					alert('There was an error getting the post. Error is in console.');
@@ -44,9 +44,11 @@ Template.editor.onCreated(
 
 );
 
+
 Template.editor.helpers({
-	'MyEditor'() {
-		return MyEditor;
+	
+	'QuillEditor'() {
+		return quillEditor;
 	},
 	'isLoading'() {
 		//checks if the template is still loading data
@@ -82,6 +84,7 @@ Template.editor.events({
 		}
 
 
-	}
+	},
+	
 	
 });

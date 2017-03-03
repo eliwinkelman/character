@@ -25,7 +25,7 @@ msavin:mongol
 fourseven:scss
 wolves:bourbon
 francocatena:compass
-http@1.2.10
+http
 base64@1.0.10
 ostrio:base64
 simple:reactive-method
@@ -43,3 +43,6 @@ accounts-ui@1.1.9
 shell-server
 react-template-helper
 cosmos:browserify
+ddp
+yuukan:streamy
+random

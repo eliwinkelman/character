@@ -1,9 +1,6 @@
-//TODO: move to wordpress 4.7 core endpoints
-//TODO: Connect to app broker
-//TODO: Better api root discovery
+
+//TODO: create new blog in Blogs when site is added
 import { Meteor } from "meteor/meteor";
-
-
 
 var OAuth  = require('oauth-1.0a');
 if (Meteor.isServer) {
