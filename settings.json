@@ -1,5 +1,9 @@
 {
-  "appKey": "1DkNrGFgOMmy",
-  "appSecret": "uOxEmZ5ynYZGRX0yqse1mSNNj9Q1eUIXLhryJcHmalqJHpnG",
-  "callbackUrl": "localhost:3000/authorize"
+  "brokerKey": "1DkNrGFgOMmy",
+  "brokerSecret": "uOxEmZ5ynYZGRX0yqse1mSNNj9Q1eUIXLhryJcHmalqJHpnG",
+  "callbackUrl": "localhost:3000/authorize",
+  "brokerUrl": "https://apps.wp-api.org/broker/connect/",
+  "public": {
+    "collaborationServerUrl": "localhost:8080"
+  }
 }

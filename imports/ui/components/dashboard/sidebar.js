@@ -12,6 +12,7 @@ Template.sidebar.onCreated(
 		}
 	}
 );
+
 Template.sidebar.onRendered(
 	function() {
 
@@ -21,9 +22,8 @@ Template.sidebar.onRendered(
 			if (width < 768) {
 				sidebar.style.height = 'calc(100vh - 60px)';
 				$(".sidebar").hide();
-
-
 			}
+
 			if (width > 768) {
 				sidebar.style.height = '100vh';
 				$(".sidebar").show();
@@ -50,6 +50,9 @@ Template.sidebar.helpers({
 			return "active";
 		}
 
+	},
+	'blogs'() {
+		
 	}
 });
 

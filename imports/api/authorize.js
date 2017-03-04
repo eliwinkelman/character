@@ -25,7 +25,7 @@ Meteor.methods({
 			//prepare request to api broker for keys
 			var url = 'http://' + siteUrl;
 			var broker_request_data = {
-				url: 'https://apps.wp-api.org/broker/connect/',
+				url: Meteor.settings.brokerUrl,
 				method: 'POST',
 				data: {
 					server_url: url
@@ -34,15 +34,15 @@ Meteor.methods({
 			//create oauth1 signature for broker request
 			var broker_oauth = OAuth({
 				consumer: {
-					public: '1DkNrGFgOMmy',
-					secret: 'uOxEmZ5ynYZGRX0yqse1mSNNj9Q1eUIXLhryJcHmalqJHpnG'
+					public: Meteor.settings.brokerKey,
+					secret: Meteor.settings.brokerSecret
 
 				},
 
 				signature_method: 'HMAC-SHA1'
 			});
 			//broker request
-			var broker_request = HTTP.post('https://apps.wp-api.org/broker/connect/', {
+			var broker_request = HTTP.post(Meteor.settings.brokerUrl, {
 				params: broker_oauth.authorize(broker_request_data)
 			});
 
@@ -66,7 +66,7 @@ Meteor.methods({
 						url: requestUrl,
 						method: 'GET',
 						data: {
-							oauth_callback: "localhost:3000/authorize"
+							oauth_callback: Meteor.settings.callbackUrl
 						}
 					};
 
@@ -95,7 +95,7 @@ Meteor.methods({
 					Meteor.users.update(Meteor.userId(), {$set: {
 						token: token,
 						tokenSecret: tokenSecret,
-						website: 'http://' + siteUrl,
+						website: requestLink,
 						consumerPublic: consumerPublic,
 						consumerPrivate: consumerPrivate
 					}});
@@ -118,8 +118,7 @@ Meteor.methods({
 	'getPermTokens'(oauthVerifier) {
 		if (Meteor.isServer) {
 
-			var siteUrl = Meteor.user().website,
-				requestLink = siteUrl + '/wp-json/';
+			var requestLink = Meteor.user().website;
 
 			var authentication = HTTP.get(requestLink, {});
 			var accessUrl = authentication.data.authentication.oauth1.access;

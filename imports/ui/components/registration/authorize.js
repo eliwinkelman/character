@@ -1,6 +1,7 @@
 import "./authorize.html";
 import { Template } from "meteor/templating";
 import { Meteor } from "meteor/meteor";
+import {AuthorizeBlog} from "./authorize.jsx";
 
 Meteor.subscribe('userData');
 Template.authorize.onRendered(() => {
@@ -27,5 +28,10 @@ Template.authorize.events({
 				alert("There was a server error.")
 			}
 		});
+	}
+});
+Template.authorize.helpers({
+	'AuthorizeBlog'() {
+		return AuthorizeBlog;
 	}
 });

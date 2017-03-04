@@ -3,7 +3,7 @@
     {{#if isLoading}}
         {{> loading}}
     {{else}}
-
+        {{#if hasBlogs}}
     <div class="container-fluid">
 
         <div class="row">
@@ -54,7 +54,13 @@
 
         </div>
     </div>
+        {{else}}
+            <div> {{> React component=noBlogsComponent }}
+            </div>
+
+        {{/if}}
     {{/if}}
+
     </body>
 </template>
 

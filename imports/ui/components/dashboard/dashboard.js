@@ -2,6 +2,7 @@ import "./editor.js";
 import "./dashboard.html";
 import "./sidebar";
 import "./previewpost";
+import {noBlogs} from "./noBlogs.jsx";
 import {Template} from "meteor/templating";
 import "./../loading";
 import { Meteor } from "meteor/meteor";
@@ -37,6 +38,9 @@ Template.dashboard.helpers({
 	'posts'() {
 		return Template.instance().Posts.get();
 	},
+	'noBlogsComponent'() {
+		return noBlogs;
+	},
 	'postId'() {
 		var postId = FlowRouter.getParam('postId');
 	},
@@ -57,7 +61,10 @@ Template.dashboard.helpers({
 				post = posts.filter( function(posts){return (posts.id == postId);} );
 			return(post[0].content);
 		}
-}
+	},
+	'hasBlogs'() {
+		return false;
+	}
 });
 Template.dashboard.events({
 	'click .sidebarToggle'() {

@@ -1,5 +1,4 @@
 import "./register.html";
-import "./authorize";
+import "./authorize.js";
 import "./signup";
 import "./signin";
-

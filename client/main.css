@@ -2,7 +2,16 @@
     height: 20px;
     border-bottom: 1px solid #eee;
 }
-
+.center-vertically-horizontally{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.center-vertically-horizontally-container{
+    position: relative;
+    height: 90vh;
+}
 .entry-markdown-content {
     height: 100%;
 }

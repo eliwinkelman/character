@@ -92,7 +92,8 @@ export class quillEditor extends React.Component {
 	
 	componentDidMount() {
 		// Open WebSocket connection to ShareDB server
-		var socket = new WebSocket('ws://' + 'localhost:8080');
+		var collaborationServerUrl = Meteor.settings.public.collaborationServerUrl;
+		var socket = new WebSocket('ws://' + collaborationServerUrl);
 		var connection = new sharedb.Connection(socket);
 
 // For testing reconnection
@@ -100,7 +101,7 @@ export class quillEditor extends React.Component {
 			connection.close();
 		};
 		window.connect = function() {
-			var socket = new WebSocket('ws://' + 'localhost:8080');
+			var socket = new WebSocket('ws://' + collaborationServerUrl);
 			connection.bindToSocket(socket);
 		};
 
