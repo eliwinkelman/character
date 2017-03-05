@@ -14,21 +14,33 @@ Template.dashboard.onCreated(
 		this.Posts = new ReactiveVar('');
 		var loadCount = 0;
 		
-		Meteor.call('getPosts', function(error, response) {
-			if (!error) {
-
-					$("#loader-wrapper").fadeOut(1000);
-					setTimeout(function() {
-						self.isLoading.set(false);
-						self.Posts.set(response);
-					}, 1000);
-
-
+		self.autorun(function() {
+			const user = Meteor.user();
+			if (!user) {
+				return;
 			}
+			if (user.currentBlog) {
+				Meteor.call('getPosts', function(error, response) {
+					if (!error) {
+						$("#loader-wrapper").fadeOut(1000);
+						setTimeout(function() {
+							self.isLoading.set(false);
+							self.Posts.set(response);
+						}, 1000);
+
+					}
+				});
+			}
+
 		});
+		
+		
+		
+
+		
 
 		var postId = FlowRouter.getParam('postId');
-		Session.set('selectedPost', postId);
+
 	}
 );
 Template.dashboard.helpers({
