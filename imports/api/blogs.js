@@ -5,9 +5,12 @@ export const Blogs = new Mongo.Collection('blogs');
 //TODO: Publish users blogs to frontend
 
 Meteor.startup(() => {
-
+if (Meteor.isServer) {
 	Meteor.publish("blogs", function () {
-			return Blogs.find({});
+		return Blogs.find({});
 	});
+}
+
+
 });
 
