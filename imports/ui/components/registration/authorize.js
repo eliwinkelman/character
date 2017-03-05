@@ -16,12 +16,21 @@ Template.authorize.onRendered(() => {
 			}
 		});
 	}
+
+	$('.selectpicker').selectpicker({
+		size: 2,
+		width: '95px'
+	});
+
 });
 Template.authorize.events({
 	'submit .domainNameForm'(event) {
 		event.preventDefault();
 		const target = event.target;
-		var url = target.url.value;
+		console.log(target);
+		var httpPrefix = $('#httpSelect').val();
+		console.log(httpPrefix);
+		var url = httpPrefix + target.url.value;
 		Meteor.call('getTempTokens', url, function(error, response) {
 			if (!error) {
 				window.location.href = response;
@@ -35,8 +44,5 @@ Template.authorize.events({
 Template.authorize.helpers({
 	'AuthorizeBlog'() {
 		return AuthorizeBlog;
-	},
-	'blogs'() {
-		return Blogs.find();
 	}
 });

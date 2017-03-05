@@ -13,11 +13,26 @@ Meteor.startup(() => {
 				var user = Meteor.users.findOne(this.userId);
 
 				blogIds = user.blogs.map((blogs) => {return blogs.blogId});
-				
+
 				return Blogs.find({_id: {$in: blogIds}});
 			}
 
 		});
+	}
+});
+
+Meteor.methods({
+	'changeCurrentBlog'(blogId) {
+		Meteor.users.update(Meteor.userId(), {$set: {currentBlog: blogId}})
+
+	},
+	'newLocalPost'(title, wpId, contentDelta, collabId) {
+		blogId = Meteor.user().currentBlog;
+		Blogs.update({_id: blogId}, {$push: {posts: {title: title, wpId: wpId, content: contentDelta, collabId: collabId}}});
+	},
+	'updateLocalPostContent'(contentDelta, collabId) {
+		blogId = Meteor.user().currentBlog;
+		Blogs.update({_id: blogId, 'posts.collabId': collabId}, {$set: {'posts.$.content': contentDelta}});
 	}
 });
 

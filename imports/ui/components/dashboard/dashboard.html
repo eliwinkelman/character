@@ -33,6 +33,9 @@
 
                             <div class="col-xs-12 col-md-4 col-sm-6 col-lg-4 sidebarPosts">
                                 <div class="dashboardPosts">
+                                    {{#each localPosts}}
+                                        {{> localDashboardPost}}
+                                    {{/each}}
                                     {{#each posts}}
                                         {{> dashboardPost}}
                                     {{/each}}

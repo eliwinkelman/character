@@ -1,6 +1,7 @@
 import "./editor.html";
 import { Template } from "meteor/templating";
 import { Meteor } from "meteor/meteor";
+import {Random} from "meteor/random"
 import "./postbuttons.js";
 import "./../loading";
 import {quillEditor} from './quill-editor/Quill.jsx';
@@ -12,27 +13,46 @@ Template.editor.onCreated(
 	function() {
 		this.isLoading = new ReactiveVar(true);
 		var postId = FlowRouter.getParam('postId');
+		console.log(postId);
+		var isNew = FlowRouter.getQueryParam('new');
 		var self = this;
-
+		self.postContent='';
 		if (postId) {
+			if (isNew) {
+				self.docName=postId;
+				$("#loader-wrapper").fadeOut(1000);
+				setTimeout(function() {
+					self.isLoading.set(false);
+				}, 1000)
+			}
+			else {
+				Meteor.call('getPost', postId, function(error, result){
+					if (!error) {
+						console.log(result);
+						self.postContent=result.data.content.raw;
+						$("#loader-wrapper").fadeOut(1000);
+
+						setTimeout(function() {
+							self.isLoading.set(false);
+						}, 1000);
+						if (error) {
+							alert('There was an error getting the post. Error is in console.');
+							console.log(error);
+							FlowRouter.go('/dash');
+						}
+					}
+
+				});
+			}
 			//loads all the post data
-			Meteor.call('getPost', postId, function(error, result){
-				if (!error) {
-					$("#loader-wrapper").fadeOut(1000);
-					setTimeout(function() {
-						self.isLoading.set(false);
 
-					}, 1000);
-				if (error) {
-					alert('There was an error getting the post. Error is in console.');
-					console.log(error);
-					FlowRouter.go('/dash');
-				}
-				}
-
-			});
+			
 		}
 		else {
+			this.docName = Random.id();
+			Meteor.call('newLocalPost', '(untitled)', '-1', '', this.docName);
+			Meteor.call('createCollaborationDoc', this.docName);
+			FlowRouter.go('/editor/' + this.docName + '?' + 'new=true');
 			$("#loader-wrapper").fadeOut(1000);
 			setTimeout(function() {
 				self.isLoading.set(false);
@@ -71,6 +91,10 @@ Template.editor.helpers({
 			return (content);
 		}
 
+	},
+
+	'docName'() {
+		return Template.instance().docName;
 	}
 
 });
@@ -84,7 +108,7 @@ Template.editor.events({
 		}
 
 
-	},
+	}
 	
 	
 });

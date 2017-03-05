@@ -1,7 +1,12 @@
 import "./sidebar.html"
 import { Template } from "meteor/templating"
 import "./post";
+import {Meteor} from "meteor/meteor";
+import {Blogs} from "/imports/api/blogs.js";
 //TODO: User Settings
+
+Meteor.subscribe('blogs');
+
 Template.sidebar.onCreated(
 	function() {
 		var sidebar = document.querySelector("#sidebar");
@@ -52,10 +57,14 @@ Template.sidebar.helpers({
 
 	},
 	'blogs'() {
-		
+		return Blogs.find({_id: {$ne: Meteor.user().currentBlog}});
 	}
 });
 
-Template.sidebar.helpers({
-	
+Template.sidebar.events({
+	'click .changeBlog'() {
+		Meteor.call('changeCurrentBlog', this._id);
+		FlowRouter.go('/dash');
+	}
+
 });

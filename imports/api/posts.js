@@ -245,7 +245,7 @@ Meteor.methods({
 				'users.userId': Meteor.userId()
 			}, {_id: 1, 'users.$': 1});
 
-			var requestLink = blog.url + 'wp/v2/posts/ + id';
+			var requestLink = blog.url + 'wp/v2/posts/' + id;
 			var token = blog.users[0].token;
 			var tokenSecret = blog.users[0].tokenSecret;
 			var consumerPublic = blog.users[0].consumerPublic;

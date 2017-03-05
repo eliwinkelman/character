@@ -21,10 +21,12 @@ if (Meteor.isServer) {
 
 Meteor.methods({
 	
-	'getTempTokens'(siteUrl) {
+	'getTempTokens'(url) {
 		if (Meteor.isServer) {
 			//prepare request to api broker for keys
-			var url = 'http://' + siteUrl;
+
+
+
 			var broker_request_data = {
 				url: Meteor.settings.brokerUrl,
 				method: 'POST',
@@ -51,6 +53,7 @@ Meteor.methods({
 			if (broker_request.statusCode == 200) {
 				//set api link for site
 				var requestLink = broker_request.data.api_root;
+				console.log(requestLink);
 				var blogCreatedAlready = Blogs.findOne({url: {$eq: requestLink}, "users.userId": Meteor.userId()});
 				if (blogCreatedAlready) {
 					return 'dash';
@@ -96,7 +99,7 @@ Meteor.methods({
 						tokenSecret = oauthTokens[1].substring(oauthTokens[1].indexOf('=')+1);
 
 					//save to user
-					//TODO make new blog and save this info there. Save blog id in user.blogs
+
 					var blogId = null;
 
 					var blog = Blogs.findOne({url: {$eq: requestLink}});
@@ -105,8 +108,8 @@ Meteor.methods({
 
 						Blogs.update({_id: blogId}, {$addToSet: {users: [{
 							userId: Meteor.userId(),
-							token: token,
-							tokenSecret: tokenSecret,
+							temptoken: token,
+							temptokenSecret: tokenSecret,
 							consumerPublic: consumerPublic,
 							consumerPrivate: consumerPrivate
 						}]
@@ -118,8 +121,8 @@ Meteor.methods({
 								name: siteName,
 								users: [{
 									userId: Meteor.userId(),
-									token: token,
-									tokenSecret: tokenSecret,
+									temptoken: token,
+									temptokenSecret: tokenSecret,
 									consumerPublic: consumerPublic,
 									consumerPrivate: consumerPrivate
 								}]
@@ -172,8 +175,8 @@ Meteor.methods({
 
 			if (accessUrl != '') {
 
-				var tempToken = blog.users[0].token;
-				var tempTokenSecret = blog.users[0].tokenSecret,
+				var tempToken = blog.users[0].temptoken;
+				var tempTokenSecret = blog.users[0].temptokenSecret,
 					consumerPrivate = blog.users[0].consumerPrivate,
 					consumerPublic = blog.users[0].consumerPublic;
 

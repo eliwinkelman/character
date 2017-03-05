@@ -1,0 +1,7 @@
+<template name="appLayout">
+    {{#if currentUser}}
+        {{> Template.dynamic template=template}}
+    {{else}}
+        {{> atForm}}
+    {{/if}}
+</template>

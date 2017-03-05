@@ -9,15 +9,24 @@
                 <p><a href="https://github.com/WP-API/broker-plugin/archive/master.zip">WP Rest API Broker Plugin</a> This allows Character to connect more simply.</p>
                 <p>Once you have installed both plugins input your url below.</p>
                 <form class="domainNameForm form-inline">
+
                     <div class="input-group input-group-lg">
-                        <span class="input-group-addon">http://</span>
-                        <input type="text" class="form-control url" id="url" placeholder="Website Url">
+                       <select id='httpSelect' class="selectpicker selectpicker-btn-group" style="margin-right: 200px">
+                            <option>http://</option>
+                            <option>https://</option>
+                        </select>
+
+
+
+
+                        <input type="text" class="form-control url" style = "margin-left: 10px;" id="url" placeholder="Website Url">
+                        <div class="input-group-btn">
+                            <button class="btn btn-primary" type="submit">Continue</button>
+                        </div>
                     </div>
-                    <button class="btn btn-primary" type="submit">Continue</button>
+
                 </form>
-                    {{#each blogs}}
-                        {{blogs.name}}
-                        {{/each}}
+
             </div>
         </div>
     </div>

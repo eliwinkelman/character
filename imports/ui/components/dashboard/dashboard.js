@@ -6,6 +6,9 @@ import {noBlogs} from "./noBlogs.jsx";
 import {Template} from "meteor/templating";
 import "./../loading";
 import { Meteor } from "meteor/meteor";
+import {Blogs} from '/imports/api/blogs.js';
+
+Meteor.subscribe('blogs');
 
 Template.dashboard.onCreated(
 	function() {
@@ -33,11 +36,6 @@ Template.dashboard.onCreated(
 			}
 
 		});
-		
-		
-		
-
-		
 
 		var postId = FlowRouter.getParam('postId');
 
@@ -49,6 +47,11 @@ Template.dashboard.helpers({
 	},
 	'posts'() {
 		return Template.instance().Posts.get();
+	},
+	'localPosts'() {
+		posts = Blogs.findOne({_id: Meteor.user().currentBlog}, {_id: 0, post: 1}).posts;
+		console.log(posts);
+		return posts;
 	},
 	'noBlogsComponent'() {
 		return noBlogs;
@@ -76,8 +79,13 @@ Template.dashboard.helpers({
 	},
 	'hasBlogs'() {
 		return Meteor.user().currentBlog;
+	},
+	'blogs'() {
+		return Blogs.find();
 	}
+	
 });
+
 Template.dashboard.events({
 	'click .sidebarToggle'() {
 

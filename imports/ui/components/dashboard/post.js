@@ -23,3 +23,22 @@ Template.dashboardPost.helpers({
 
 	 }
  });
+Template.localDashboardPost.helpers({
+	'route'() {
+		return "/editor/" + this.collabId + "?new=true";
+	},
+	'active'() {
+		var selectedPost = Session.get('selectedPost');
+		if (selectedPost == this.collabId) {
+			return 'activePostContent';
+		}
+	}
+});
+Template.localDashboardPost.events({
+	'click .viewPost'(e) {
+		e.preventDefault();
+		var route = "/editor/" + this.collabId + "?new=true";
+		FlowRouter.go(route);
+
+	}
+});

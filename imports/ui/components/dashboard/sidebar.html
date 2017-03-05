@@ -10,9 +10,10 @@
                 Switch Blog <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
+                {{#each blogs}}
+                <li><a class="switchBlog">{{name}}</a></li>
+                {{/each}}
+                <li><a href="/authorize">Add New Blog</a></li>
             </ul>
         </div>
     </div>
