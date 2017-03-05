@@ -2,33 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8ff480db-a852-43ff-9eb0-5a16a6672af1" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/ui/components/appLayout.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/imports/ui/components/appLayout.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/character.iml" afterPath="$PROJECT_DIR$/.idea/character.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/meteor_packages_auto_import_browser.xml" afterPath="$PROJECT_DIR$/.idea/libraries/meteor_packages_auto_import_browser.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.meteor/packages" afterPath="$PROJECT_DIR$/.meteor/packages" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.meteor/versions" afterPath="$PROJECT_DIR$/.meteor/versions" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/main.css" afterPath="$PROJECT_DIR$/client/main.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/main.html" afterPath="$PROJECT_DIR$/client/main.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/client/main.js" afterPath="$PROJECT_DIR$/client/main.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/api/authorize.js" afterPath="$PROJECT_DIR$/imports/api/authorize.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/api/blogs.js" afterPath="$PROJECT_DIR$/imports/api/blogs.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/api/collaboration.js" afterPath="$PROJECT_DIR$/imports/api/collaboration.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/api/posts.js" afterPath="$PROJECT_DIR$/imports/api/posts.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/components/dashboard/dashboard.html" afterPath="$PROJECT_DIR$/imports/ui/components/dashboard/dashboard.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/components/dashboard/dashboard.js" afterPath="$PROJECT_DIR$/imports/ui/components/dashboard/dashboard.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/components/dashboard/editor.html" afterPath="$PROJECT_DIR$/imports/ui/components/dashboard/editor.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/components/dashboard/editor.js" afterPath="$PROJECT_DIR$/imports/ui/components/dashboard/editor.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/components/dashboard/post.html" afterPath="$PROJECT_DIR$/imports/ui/components/dashboard/post.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/components/dashboard/post.js" afterPath="$PROJECT_DIR$/imports/ui/components/dashboard/post.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/components/dashboard/quill-editor/Quill.jsx" afterPath="$PROJECT_DIR$/imports/ui/components/dashboard/quill-editor/Quill.jsx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/components/dashboard/sidebar.html" afterPath="$PROJECT_DIR$/imports/ui/components/dashboard/sidebar.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/components/dashboard/sidebar.js" afterPath="$PROJECT_DIR$/imports/ui/components/dashboard/sidebar.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/components/registration/authorize.html" afterPath="$PROJECT_DIR$/imports/ui/components/registration/authorize.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/components/registration/authorize.js" afterPath="$PROJECT_DIR$/imports/ui/components/registration/authorize.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/routes.js" afterPath="$PROJECT_DIR$/lib/routes.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/server/main.js" afterPath="$PROJECT_DIR$/server/main.js" />
     </list>
     <ignored path="character.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -74,8 +48,8 @@
       <file leaf-file-name="post.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/imports/ui/components/dashboard/post.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="22" column="34" selection-start-line="22" selection-start-column="34" selection-end-line="22" selection-end-column="34" />
+            <state relative-caret-position="150">
+              <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -222,8 +196,9 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
+    <option name="y" value="92" />
     <option name="width" value="1280" />
-    <option name="height" value="800" />
+    <option name="height" value="726" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -491,7 +466,6 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="15" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
     <property name="nodejs.mocha.mocha_node_package_dir" value="$PROJECT_DIR$/node_modules/mocha" />
-    <property name="FullScreen" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -585,7 +559,7 @@
       <workItem from="1487818866724" duration="2246000" />
       <workItem from="1487890264560" duration="39347000" />
       <workItem from="1488322951055" duration="46117000" />
-      <workItem from="1488688750190" duration="15717000" />
+      <workItem from="1488688750190" duration="16240000" />
     </task>
     <task id="LOCAL-00001" summary="Changed to individual consumers for oauth1">
       <created>1469935131070</created>
@@ -633,10 +607,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="152297000" />
+    <option name="totallyTimeSpent" value="152820000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1280" height="800" extended-state="0" />
+    <frame x="0" y="92" width="1280" height="726" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21171875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1031,8 +1005,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/imports/ui/components/dashboard/post.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="34" selection-start-line="22" selection-start-column="34" selection-end-line="22" selection-end-column="34" />
+        <state relative-caret-position="150">
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
           <folding />
         </state>
       </provider>
