@@ -2,8 +2,10 @@ import "./authorize.html";
 import { Template } from "meteor/templating";
 import { Meteor } from "meteor/meteor";
 import {AuthorizeBlog} from "./authorize.jsx";
+import {Blogs} from "/imports/api/blogs.js";
 
 Meteor.subscribe('userData');
+Meteor.subscribe('blogs');
 Template.authorize.onRendered(() => {
 	var oauthVerifier = FlowRouter.getQueryParam('oauth_verifier');
 	var url = '';
@@ -33,5 +35,8 @@ Template.authorize.events({
 Template.authorize.helpers({
 	'AuthorizeBlog'() {
 		return AuthorizeBlog;
+	},
+	'blogs'() {
+		return Blogs.find();
 	}
 });

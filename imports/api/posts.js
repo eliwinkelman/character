@@ -1,14 +1,22 @@
 import { Mongo } from "meteor/mongo";
 import { Meteor } from "meteor/meteor";
+import { Blogs } from "./blogs.js";
 var OAuth  = require('oauth-1.0a');
-export const Posts = new Mongo.Collection('posts');
 //TODO: add blog registry - multiple users per blog.
 Meteor.methods({
 	'newPost'(title, content) {
 		if (Meteor.isServer) {
-			var requestLink = Meteor.user().website + '/wp-json/wp/v2/posts/';
-			var token = Meteor.user().token;
-			var tokenSecret = Meteor.user().tokenSecret;
+			var blogId = Meteor.user().currentBlog;
+			var blog = Blogs.findOne({
+					_id: blogId,
+					'users.userId': Meteor.userId()
+				}, {_id: 1, 'users.$': 1});
+
+			var requestLink = blog.url + 'wp/v2/posts/';
+			var token = blog.users[0].token;
+			var tokenSecret = blog.users[0].tokenSecret;
+			var consumerPublic = blog.users[0].consumerPublic;
+			var consumerPrivate = blog.users[0].consumerPrivate;
 			var request_data = {
 				url: requestLink,
 				method: 'POST',
@@ -18,14 +26,16 @@ Meteor.methods({
 					"status": "draft"
 				}
 			};
+
 			var oauth = OAuth({
 				consumer: {
-					public: Meteor.user().consumerPublic,
-					secret: Meteor.user().consumerPrivate
+					public: consumerPublic,
+					secret: consumerPrivate
 				},
 
 				signature_method: 'HMAC-SHA1'
 			});
+
 			var tokens = {
 				public: token,
 				secret: tokenSecret
@@ -43,9 +53,20 @@ Meteor.methods({
 	},
 	'publishPost'(id, title, content) {
 		if (Meteor.isServer) {
-			var requestLink = Meteor.user().website + '/wp-json/wp/v2/posts/' + id;
-			var token = Meteor.user().token;
-			var tokenSecret = Meteor.user().tokenSecret;
+			
+			var blogId = Meteor.user().currentBlog;
+			var blog = Blogs.findOne({
+				_id: blogId,
+				'users.userId': Meteor.userId()
+			}, {_id: 1, 'users.$': 1});
+
+
+			var token = blog.users[0].token;
+			var tokenSecret = blog.users[0].tokenSecret;
+			var consumerPublic = blog.users[0].consumerPublic;
+			var consumerPrivate = blog.users[0].consumerPrivate;
+			var requestLink = blog.url + 'wp/v2/posts/' + id;
+
 			var request_data = {
 				url: requestLink,
 				method: 'POST',
@@ -57,8 +78,8 @@ Meteor.methods({
 			};
 			var oauth = OAuth({
 				consumer: {
-					public: Meteor.user().consumerPublic,
-					secret: Meteor.user().consumerPrivate
+					public: consumerPublic,
+					secret: consumerPrivate
 				},
 
 				signature_method: 'HMAC-SHA1'
@@ -79,9 +100,18 @@ Meteor.methods({
 	'updatePost'(id, title, content) {
 		if (Meteor.isServer) {
 
-			var requestLink = Meteor.user().website + '/wp-json/wp/v2/posts/' + id;
-			var token = Meteor.user().token;
-			var tokenSecret = Meteor.user().tokenSecret;
+			var blogId = Meteor.user().currentBlog;
+			var blog = Blogs.findOne({
+				_id: blogId,
+				'users.userId': Meteor.userId()
+			}, {_id: 1, 'users.$': 1});
+
+			var requestLink = blog.url + 'wp/v2/posts/' + id;
+			var token = blog.users[0].token;
+			var tokenSecret = blog.users[0].tokenSecret;
+			var consumerPublic = blog.users[0].consumerPublic;
+			var consumerPrivate = blog.users[0].consumerPrivate;
+
 			var request_data = {
 				url: requestLink,
 				method: 'POST',
@@ -92,12 +122,13 @@ Meteor.methods({
 			};
 			var oauth = OAuth({
 				consumer: {
-					public: Meteor.user().consumerPublic,
-					secret: Meteor.user().consumerPrivate
+					public: consumerPublic,
+					secret: consumerPrivate
 				},
 
 				signature_method: 'HMAC-SHA1'
 			});
+
 			var tokens = {
 				public: token,
 				secret: tokenSecret
@@ -108,21 +139,33 @@ Meteor.methods({
 			});
 
 			return (post.data.id);
+
 		}
 	},
+
 	'deletePost'(id) {
+
 		if (Meteor.isServer) {
-			var requestLink = Meteor.user().website + '/wp-json/wp/v2/posts/' + id;
-			var token = Meteor.user().token;
-			var tokenSecret = Meteor.user().tokenSecret;
+			var blogId = Meteor.user().currentBlog;
+			var blog = Blogs.findOne({
+				_id: blogId,
+				'users.userId': Meteor.userId()
+			}, {_id: 1, 'users.$': 1});
+
+			var requestLink = blog.url + 'wp/v2/posts/' + id;
+			var token = blog.users[0].token;
+			var tokenSecret = blog.users[0].tokenSecret;
+			var consumerPublic = blog.users[0].consumerPublic;
+			var consumerPrivate = blog.users[0].consumerPrivate;
+
 			var request_data = {
 				url: requestLink,
 				method: 'POST'
 			};
 			var oauth = OAuth({
 				consumer: {
-					public: Meteor.user().consumerPublic,
-					secret: Meteor.user().consumerPrivate
+					public: consumerPublic,
+					secret: consumerPrivate
 				},
 
 				signature_method: 'HMAC-SHA1'
@@ -131,23 +174,32 @@ Meteor.methods({
 				public: token,
 				secret: tokenSecret
 			};
-			console.log(oauth.authorize(request_data, tokens));
+
 			var post = HTTP.post(requestLink, {
 				params: oauth.authorize(request_data, tokens),
 				headers: {
 					"X-HTTP-Method-Override": "DELETE"
 				}
 			});
-			console.log(post);
+
 
 		}
 	},
 	'getPosts'() {
 
 	if (Meteor.isServer) {
-		var requestLink = Meteor.user().website + '/wp-json/wp/v2/posts';
-		var token = Meteor.user().token;
-		var tokenSecret = Meteor.user().tokenSecret;
+		var blogId = Meteor.user().currentBlog;
+		var blog = Blogs.findOne({
+			_id: blogId,
+			'users.userId': Meteor.userId()
+		}, {_id: 1, 'users.$': 1});
+
+		var requestLink = blog.url + 'wp/v2/posts/';
+		var token = blog.users[0].token;
+		var tokenSecret = blog.users[0].tokenSecret;
+		var consumerPublic = blog.users[0].consumerPublic;
+		var consumerPrivate = blog.users[0].consumerPrivate;
+
 		var request_data = {
 			url: requestLink,
 			method: 'GET',
@@ -157,8 +209,8 @@ Meteor.methods({
 		};
 		var oauth = OAuth({
 			consumer: {
-				public: Meteor.user().consumerPublic,
-				secret: Meteor.user().consumerPrivate
+				public: consumerPublic,
+				secret: consumerPrivate
 			},
 
 			signature_method: 'HMAC-SHA1'
@@ -180,19 +232,25 @@ Meteor.methods({
 				content: data[i].content.rendered
 			});
 		}
-		
 		return (parsedPosts);
 
-	}
-
-
+		}
 	},
 	'getPost'(id) {
 		if(Meteor.isServer) {
-			var requestLink = Meteor.user().website + '/wp-json/wp/v2/posts/' + id;
 
-			var token = Meteor.user().token;
-			var tokenSecret = Meteor.user().tokenSecret;
+			var blogId = Meteor.user().currentBlog;
+			var blog = Blogs.findOne({
+				_id: blogId,
+				'users.userId': Meteor.userId()
+			}, {_id: 1, 'users.$': 1});
+
+			var requestLink = blog.url + 'wp/v2/posts/ + id';
+			var token = blog.users[0].token;
+			var tokenSecret = blog.users[0].tokenSecret;
+			var consumerPublic = blog.users[0].consumerPublic;
+			var consumerPrivate = blog.users[0].consumerPrivate;
+
 			var request_data = {
 				url: requestLink,
 				method: 'POST',
@@ -201,8 +259,8 @@ Meteor.methods({
 			};
 			var oauth = OAuth({
 				consumer: {
-					public: Meteor.user().consumerPublic,
-					secret: Meteor.user().consumerPrivate
+					public: consumerPublic,
+					secret: consumerPrivate
 				},
 
 				signature_method: 'HMAC-SHA1'

@@ -92,7 +92,9 @@ export class quillEditor extends React.Component {
 	
 	componentDidMount() {
 		// Open WebSocket connection to ShareDB server
+
 		var collaborationServerUrl = Meteor.settings.public.collaborationServerUrl;
+		console.log(collaborationServerUrl);
 		var socket = new WebSocket('ws://' + collaborationServerUrl);
 		var connection = new sharedb.Connection(socket);
 

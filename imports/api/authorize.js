@@ -1,6 +1,7 @@
 
 //TODO: create new blog in Blogs when site is added
 import { Meteor } from "meteor/meteor";
+import {Blogs} from "./blogs.js";
 
 var OAuth  = require('oauth-1.0a');
 if (Meteor.isServer) {
@@ -8,7 +9,7 @@ if (Meteor.isServer) {
 		if (this.userId) {
 			return Meteor.users.find({_id: this.userId},
 				{fields: {
-						'token': 1, 'tokenSecret': 1
+						'token': 1, 'tokenSecret': 1, 'currentBlog': 1, 'blogs':1
 					}
 				});
 		} else {
@@ -50,18 +51,22 @@ Meteor.methods({
 			if (broker_request.statusCode == 200) {
 				//set api link for site
 				var requestLink = broker_request.data.api_root;
-
+				var blogCreatedAlready = Blogs.findOne({url: {$eq: requestLink}, "users.userId": Meteor.userId()});
+				if (blogCreatedAlready) {
+					return 'dash';
+				}
 				var authentication = HTTP.get(requestLink, {});
+				var siteName = authentication.data.name;
 				var requestUrl = authentication.data.authentication.oauth1.request;
 
 				//set consumer keys to the ones received from the broker
-				consumerPrivate = broker_request.data.client_secret;
-				consumerPublic = broker_request.data.client_token;
+				var consumerPrivate = broker_request.data.client_secret;
+				var consumerPublic = broker_request.data.client_token;
 
 				if (requestUrl != '') {
 
 					//prepare request to wordpress client for temp keys
-
+					//console.log(Meteor.settings.callbackUrl);
 					var request_data = {
 						url: requestUrl,
 						method: 'GET',
@@ -91,18 +96,52 @@ Meteor.methods({
 						tokenSecret = oauthTokens[1].substring(oauthTokens[1].indexOf('=')+1);
 
 					//save to user
+					//TODO make new blog and save this info there. Save blog id in user.blogs
+					var blogId = null;
 
-					Meteor.users.update(Meteor.userId(), {$set: {
-						token: token,
-						tokenSecret: tokenSecret,
-						website: requestLink,
-						consumerPublic: consumerPublic,
-						consumerPrivate: consumerPrivate
+					var blog = Blogs.findOne({url: {$eq: requestLink}});
+					if (blog) {
+						blogId = blog._id;
+
+						Blogs.update({_id: blogId}, {$addToSet: {users: [{
+							userId: Meteor.userId(),
+							token: token,
+							tokenSecret: tokenSecret,
+							consumerPublic: consumerPublic,
+							consumerPrivate: consumerPrivate
+						}]
+						}})
+					}
+					else {
+						blogId = Blogs.insert({
+								url: requestLink,
+								name: siteName,
+								users: [{
+									userId: Meteor.userId(),
+									token: token,
+									tokenSecret: tokenSecret,
+									consumerPublic: consumerPublic,
+									consumerPrivate: consumerPrivate
+								}]
+
+						})
+					}
+
+
+
+					Meteor.users.update(Meteor.userId(),
+						{
+							$addToSet: {blogs:
+							{
+							blogId: blogId,
+							name: siteName
+							}
+						}, $set: {currentBlog: blogId
 					}});
-					console.log(token, tokenSecret);
+
 					var authorizeUrl = authentication.data.authentication.oauth1.authorize;
 					authorizeUrl += '?' + request.content;
-					console.log(authorizeUrl);
+
 					return (authorizeUrl);
 
 				}
@@ -112,23 +151,31 @@ Meteor.methods({
 
 			}
 
-
 		}
 	},
 	'getPermTokens'(oauthVerifier) {
 		if (Meteor.isServer) {
+		//TODO: Create blog in blogs in this method
+			var blogId = Meteor.user().currentBlog;
 
-			var requestLink = Meteor.user().website;
+			var blog = Blogs.findOne({
+					_id: blogId
+				},
+				{_id: 0, url: 1,
+					users: {$elemMatch: {userId: Meteor.userId()}}
+				});
 
+			var requestLink = blog.url;
 			var authentication = HTTP.get(requestLink, {});
 			var accessUrl = authentication.data.authentication.oauth1.access;
+			var siteName = authentication.data.name;
 
 			if (accessUrl != '') {
-				var tempToken = Meteor.user().token;
 
-				var tempTokenSecret = Meteor.user().tokenSecret,
-					consumerPrivate = Meteor.user().consumerPrivate,
-					consumerPublic = Meteor.user().consumerPublic;
+				var tempToken = blog.users[0].token;
+				var tempTokenSecret = blog.users[0].tokenSecret,
+					consumerPrivate = blog.users[0].consumerPrivate,
+					consumerPublic = blog.users[0].consumerPublic;
 
 				var request_data = {
 					url: accessUrl,
@@ -145,23 +192,26 @@ Meteor.methods({
 
 					signature_method: 'HMAC-SHA1'
 				});
+
 				var tokens = {
 					public: tempToken,
 					secret: tempTokenSecret
 				};
-				console.log(oauth.authorize(request_data, tokens));
+
+
 				var request = HTTP.get(accessUrl, {
 					params: oauth.authorize(request_data, tokens)
 				});
-				console.log(request);
+
+
 				var oauthTokens = request.content.split('&'),
 					token = oauthTokens[0].substring(oauthTokens[0].indexOf('=')+1),
 					tokenSecret = oauthTokens[1].substring(oauthTokens[1].indexOf('=')+1);
-				Meteor.users.update(Meteor.userId(), {$set: {
-					token: token,
-					tokenSecret: tokenSecret
+				Blogs.update({_id: blogId, "users.userId" : Meteor.userId()}, {$set: {
+					"users.$.token": token,
+					"users.$.tokenSecret": tokenSecret
 				}});
-				console.log(token, tokenSecret);
+
 
 			}
 		}
