@@ -63,7 +63,7 @@ Template.dashboard.helpers({
 		}
 	},
 	'hasBlogs'() {
-		return false;
+		return Meteor.user().currentBlog;
 	}
 });
 Template.dashboard.events({
