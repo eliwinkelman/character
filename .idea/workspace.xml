@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="8ff480db-a852-43ff-9eb0-5a16a6672af1" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/api/blogs.js" afterPath="$PROJECT_DIR$/imports/api/blogs.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/api/collaboration.js" afterPath="$PROJECT_DIR$/imports/api/collaboration.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/components/dashboard/editor.js" afterPath="$PROJECT_DIR$/imports/ui/components/dashboard/editor.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/imports/ui/components/dashboard/quill-editor/Quill.jsx" afterPath="$PROJECT_DIR$/imports/ui/components/dashboard/quill-editor/Quill.jsx" />
     </list>
     <ignored path="character.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -30,8 +26,8 @@
       <file leaf-file-name="editor.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/imports/ui/components/dashboard/editor.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="98">
-              <caret line="64" column="72" selection-start-line="64" selection-start-column="72" selection-end-line="64" selection-end-column="72" />
+            <state relative-caret-position="735">
+              <caret line="76" column="29" selection-start-line="76" selection-start-column="29" selection-end-line="76" selection-end-column="29" />
               <folding>
                 <element signature="e#0#23#0" expanded="true" />
               </folding>
@@ -190,8 +186,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="24" />
-    <option name="y" value="84" />
+    <option name="x" value="97" />
+    <option name="y" value="500" />
     <option name="width" value="1280" />
     <option name="height" value="714" />
   </component>
@@ -559,7 +555,7 @@
       <workItem from="1488854912814" duration="1674000" />
       <workItem from="1488943053214" duration="4644000" />
       <workItem from="1489212699290" duration="14213000" />
-      <workItem from="1489341883022" duration="2172000" />
+      <workItem from="1489341883022" duration="2700000" />
     </task>
     <task id="LOCAL-00001" summary="Changed to individual consumers for oauth1">
       <created>1469935131070</created>
@@ -607,13 +603,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="175788000" />
+    <option name="totallyTimeSpent" value="176316000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="24" y="84" width="1280" height="714" extended-state="0" />
-    <editor active="true" />
+    <frame x="97" y="500" width="1280" height="714" extended-state="0" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21171875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21171875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -976,8 +972,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/imports/ui/components/dashboard/editor.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="98">
-          <caret line="64" column="72" selection-start-line="64" selection-start-column="72" selection-end-line="64" selection-end-column="72" />
+        <state relative-caret-position="735">
+          <caret line="76" column="29" selection-start-line="76" selection-start-column="29" selection-end-line="76" selection-end-column="29" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
