@@ -27,7 +27,7 @@ Template.editor.onCreated(
 			if (postId) {
 				if (isNew) {
 					self.docName=postId;
-					Meteor.call('createCollaborationDoc', self.docName);
+					
 					$("#loader-wrapper").fadeOut(1000);
 					setTimeout(function() {
 						self.isLoading.set(false);
@@ -52,18 +52,18 @@ Template.editor.onCreated(
 						else {
 							self.docName = posts[0].collabId;
 							if (posts[0].content != null) {
-								alert('This post is being edited on character right now, you will be given the edited copy in collaborative mode.')
+								Bert.alert('This post is being edited on character right now, you will be given the edited copy in collaborative mode.')
 								self.dontLoadContent = true;
 							}
 						}
 						
-						Meteor.call('createCollaborationDoc', self.docName);
+						
 
 						Meteor.call('getPost', postId, function(error, result){
 							if (!error) {
 								console.log(result);
-								self.title = result.data.title;
-								self.postContent=result.data.content.raw;
+								self.title = result.data.title.rendered;
+								self.postContent=result.data.content.rendered;
 								$("#loader-wrapper").fadeOut(1000);
 
 								setTimeout(function() {
@@ -86,7 +86,7 @@ Template.editor.onCreated(
 			else {
 				self.docName = Random.id();
 				Meteor.call('newLocalPost', '(untitled)', '-1', '', self.docName);
-				Meteor.call('createCollaborationDoc', self.docName);
+				
 				FlowRouter.go('/editor/' + self.docName + '?' + 'new=true');
 				$("#loader-wrapper").fadeOut(1000);
 				setTimeout(function() {

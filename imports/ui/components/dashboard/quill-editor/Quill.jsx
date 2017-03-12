@@ -27,13 +27,14 @@ export class quillEditor extends React.Component {
 			//Post is only local, postId param refers to the collaboration ID, not the WP id
 			postId = null;
 			//Set the local collaboration id to save the new posts Wp Id when created
-			var localPostId = FlowRouter.getParam('postId');
+
 		}
+		let localPostId = this.props.docName;
 		//Need to convert content to html
 		var content = this.state.quill.getContents();
 		var title = document.getElementById('entry-title').value;
 		if (button == 'Save Draft'){
-			//Checks if doc is saving already)
+			//Checks if doc is saving already
 			if(!this.state.isSaving){
 				//Doc is saving
 				this.setState({isSaving: true});
@@ -43,6 +44,9 @@ export class quillEditor extends React.Component {
 					Meteor.call('updatePost', postId, title, content, function(error, result) {
 						if (error) {
 							console.log(error);
+						}
+						else {
+							Meteor.call('eraseLocalPostContent', localPostId)
 						}
 					});
 				}
@@ -78,9 +82,12 @@ export class quillEditor extends React.Component {
 							console.log(error);
 						}
 						if(!error && !postId){
+							Meteor.call('eraseLocalPostContent', localPostId);
 							FlowRouter.go('/editor/' + result);
 						}
-
+						else if (!error) {
+							Meteor.call('eraseLocalPostContent', localPostId)
+						}
 
 					});
 				}
@@ -94,6 +101,7 @@ export class quillEditor extends React.Component {
 				this.setState({isSaving: true});
 				Meteor.call('deletePost', postId, function(error, response) {
 					if(!error) {
+						Meteor.call('eraseLocalPostContent', localPostId);
 						setTimeout(function() {
 							FlowRouter.go('/dash');
 						}, 1000);
@@ -135,23 +143,33 @@ export class quillEditor extends React.Component {
 
 // Create local Doc instance mapped to 'examples' collection document with id 'richtext'
 		console.log(this.props.docName);
+		var quill = new Quill('#editor', {theme: 'snow'});
+		if (this.props.content) {
+			quill.clipboard.dangerouslyPasteHTML(1, this.props.content);
+
+			console.log(quill.getContents());
+			Meteor.call('createCollaborationDoc', this.props.docName, quill.getContents().ops, false);
+			this.setState({quill: quill});
+		}
+		else {
+			Meteor.call('createCollaborationDoc', this.props.docName, [], true);
+		}
 		var doc = connection.get(this.props.docName, 'richtext');
+
 		doc.subscribe(function(err) {
 			if (err) throw err;
-			var quill = new Quill('#editor', {theme: 'snow'});
 
 			this.setState({quill: quill});
+
 			quill.setContents(doc.data);
-			if (this.props.content) {
-				quill.clipboard.dangerouslyPasteHTML(1, this.props.content);
-				this.setState({quill: quill});
-			}
+
 			quill.on('text-change', function(delta, oldDelta, source) {
 				if (source !== 'user') return;
 				doc.submitOp(delta, {source: quill});
 				Meteor.call('updateLocalPostContent', quill.getContents(), this.props.docName);
 				this.setState({quill: quill});
 			}.bind(this));
+
 			doc.on('op', function(op, source) {
 				if (source === quill) return;
 				quill.updateContents(op);
@@ -159,6 +177,7 @@ export class quillEditor extends React.Component {
 			}.bind(this));
 
 		}.bind(this));
+
 
 
 	}
