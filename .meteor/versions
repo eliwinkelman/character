@@ -33,6 +33,7 @@ eli:ghostdown@0.4.558
 email@1.1.18
 es5-shim@4.6.15
 fastclick@1.0.13
+fortawesome:fontawesome@4.4.0_1
 fourseven:scss@3.13.0
 francocatena:compass@0.6.0
 geojson-utils@1.0.10
@@ -96,6 +97,7 @@ templating@1.3.0
 templating-compiler@1.3.0
 templating-runtime@1.3.0
 templating-tools@1.1.0
+themeteorchef:bert@2.1.1
 tmeasday:check-npm-versions@0.2.0
 tracker@1.1.1
 twbs:bootstrap@3.3.6

@@ -222,8 +222,11 @@
         <item url="file://$USER_HOME$/.meteor/packages/meteortoys_toykit/3.0.4/web.browser/style/toykit.css" />
         <item url="file://$USER_HOME$/.meteor/packages/meteortoys_toykit/3.0.4/web.browser/lib/privateAPI.js" />
         <item url="file://$USER_HOME$/.meteor/packages/meteortoys_toykit/3.0.4/web.browser/lib/collections.js" />
+        <item url="file://$USER_HOME$/.meteor/packages/themeteorchef_bert/2.1.1/web.browser/templates/bert-alert.js" />
         <item url="file://$USER_HOME$/.meteor/packages/meteortoys_toykit/3.0.4/web.browser/client/main.js" />
+        <item url="file://$USER_HOME$/.meteor/packages/themeteorchef_bert/2.1.1/web.browser/bert.js" />
         <item url="file://$USER_HOME$/.meteor/packages/accounts-base/1.2.14/web.browser/client_main.js" />
+        <item url="file://$USER_HOME$/.meteor/packages/fortawesome_fontawesome/4.4.0_1/web.browser/upstream/css/font-awesome.css" />
         <item url="file://$USER_HOME$/.meteor/packages/accounts-base/1.2.14/web.browser/client_tests.js" />
         <item url="file://$USER_HOME$/.meteor/packages/reactive-dict/1.1.8/web.browser/migration.js" />
         <item url="file://$USER_HOME$/.meteor/packages/reload/1.1.11/web.browser/deprecated.js" />
@@ -536,8 +539,11 @@
       <root url="file://$USER_HOME$/.meteor/packages/meteortoys_toykit/3.0.4/web.browser/style/toykit.css" />
       <root url="file://$USER_HOME$/.meteor/packages/meteortoys_toykit/3.0.4/web.browser/lib/privateAPI.js" />
       <root url="file://$USER_HOME$/.meteor/packages/meteortoys_toykit/3.0.4/web.browser/lib/collections.js" />
+      <root url="file://$USER_HOME$/.meteor/packages/themeteorchef_bert/2.1.1/web.browser/templates/bert-alert.js" />
       <root url="file://$USER_HOME$/.meteor/packages/meteortoys_toykit/3.0.4/web.browser/client/main.js" />
+      <root url="file://$USER_HOME$/.meteor/packages/themeteorchef_bert/2.1.1/web.browser/bert.js" />
       <root url="file://$USER_HOME$/.meteor/packages/accounts-base/1.2.14/web.browser/client_main.js" />
+      <root url="file://$USER_HOME$/.meteor/packages/fortawesome_fontawesome/4.4.0_1/web.browser/upstream/css/font-awesome.css" />
       <root url="file://$USER_HOME$/.meteor/packages/accounts-base/1.2.14/web.browser/client_tests.js" />
       <root url="file://$USER_HOME$/.meteor/packages/reactive-dict/1.1.8/web.browser/migration.js" />
       <root url="file://$USER_HOME$/.meteor/packages/reload/1.1.11/web.browser/deprecated.js" />

@@ -33,6 +33,18 @@ Meteor.methods({
 	'updateLocalPostContent'(contentDelta, collabId) {
 		blogId = Meteor.user().currentBlog;
 		Blogs.update({_id: blogId, 'posts.collabId': collabId}, {$set: {'posts.$.content': contentDelta}});
+	},
+	'setLocalPostWPId'(collabId, wpId) {
+		blogId = Meteor.user().currentBlog;
+		Blogs.update({_id: blogId, 'posts.collabId': collabId}, {$set: {'posts.$.wpId': wpId}});
+	},
+	'eraseLocalPostContent'(collabId) {
+		blogId = Meteor.user().currentBlog;
+		Blogs.update({_id: blogId, 'posts.collabId': collabId}, {$unset: {'posts.$.content': ''}});
+	},
+	'getLocalPostbyWPID'(wpId) {
+		blogId = Meteor.user().currentBlog;
+		return Blogs.findOne({_id: blogId, 'posts.wpId': wpId}, {'posts.$': 1});
 	}
 });
 

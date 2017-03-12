@@ -19,37 +19,56 @@ export class quillEditor extends React.Component {
 
 	}
 
+	//update/delete/create new post actions
 	onSubmitButtonClick(button) {
 		var postId = FlowRouter.getParam('postId');
+
 		if(FlowRouter.getQueryParam('new')) {
+			//Post is only local, postId param refers to the collaboration ID, not the WP id
 			postId = null;
+			//Set the local collaboration id to save the new posts Wp Id when created
+			var localPostId = FlowRouter.getParam('postId');
 		}
+		//Need to convert content to html
 		var content = this.state.quill.getContents();
 		var title = document.getElementById('entry-title').value;
 		if (button == 'Save Draft'){
+			//Checks if doc is saving already)
 			if(!this.state.isSaving){
+				//Doc is saving
 				this.setState({isSaving: true});
 
 				if (postId) {
+					//Update post if it already exists
 					Meteor.call('updatePost', postId, title, content, function(error, result) {
 						if (error) {
 							console.log(error);
 						}
 					});
 				}
+
 				else {
+					//Create new post
 					Meteor.call('newPost', title, content, function(error, result) {
 						if (!error) {
+							//Add WP Id to the local Post object
+							Meteor.call('setLocalPostWPId', localPostId, result);
+							//erase the local content so we know it has saved.
+							Meteor.call('eraseLocalPostContent', localPostId);
+							//go to the new created WP post
 							FlowRouter.go('/editor/' + result);
 						}
 					});
 				}
+				//Doc is done saving
 				this.setState({isSaving: false});
 			}
 		}
 
 		else if (button == 'Publish'){
 			if(!this.state.isSaving){
+
+				//doc is saving
 				this.setState({isSaving: true});
 
 				if (postId) {
@@ -65,6 +84,7 @@ export class quillEditor extends React.Component {
 
 					});
 				}
+				//doc is done saving
 				this.setState({isSaving: false});
 			}
 		}
@@ -107,6 +127,7 @@ export class quillEditor extends React.Component {
 		window.disconnect = function() {
 			connection.close();
 		};
+
 		window.connect = function() {
 			var socket = new WebSocket('ws://' + collaborationServerUrl);
 			connection.bindToSocket(socket);
@@ -118,8 +139,13 @@ export class quillEditor extends React.Component {
 		doc.subscribe(function(err) {
 			if (err) throw err;
 			var quill = new Quill('#editor', {theme: 'snow'});
+
 			this.setState({quill: quill});
 			quill.setContents(doc.data);
+			if (this.props.content) {
+				quill.clipboard.dangerouslyPasteHTML(1, this.props.content);
+				this.setState({quill: quill});
+			}
 			quill.on('text-change', function(delta, oldDelta, source) {
 				if (source !== 'user') return;
 				doc.submitOp(delta, {source: quill});
@@ -131,6 +157,9 @@ export class quillEditor extends React.Component {
 				quill.updateContents(op);
 				Meteor.call('updateLocalPostContent', quill.getContents(), this.props.docName);
 			}.bind(this));
+
 		}.bind(this));
+
+
 	}
 }

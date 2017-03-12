@@ -1,9 +1,9 @@
 {
   "brokerKey": "1DkNrGFgOMmy",
   "brokerSecret": "uOxEmZ5ynYZGRX0yqse1mSNNj9Q1eUIXLhryJcHmalqJHpnG",
-  "callbackUrl": "http://172.17.0.253000/authorize",
+  "callbackUrl": "http://192.168.0.13:3000/authorize",
   "brokerUrl": "https://apps.wp-api.org/broker/connect/",
   "public": {
-    "collaborationServerUrl": "172.17.0.25:8080"
+    "collaborationServerUrl": "192.168.0.13:8080"
   }
 }
